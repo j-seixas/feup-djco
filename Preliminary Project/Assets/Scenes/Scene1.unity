@@ -938,6 +938,8 @@ GameObject:
   - component: {fileID: 400341550}
   - component: {fileID: 400341552}
   - component: {fileID: 400341553}
+  - component: {fileID: 400341555}
+  - component: {fileID: 400341554}
   m_Layer: 9
   m_Name: Player
   m_TagString: Untagged
@@ -1054,6 +1056,57 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.8, y: 1.8}
   m_EdgeRadius: 0
+--- !u!114 &400341554
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 400341549}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 047af6409de65134389bd241be5625b3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  testTouchControlsInEditor: 0
+  verticalDPadThreshold: 0.5
+  thumbstick: {fileID: 0}
+  jumpButton: {fileID: 0}
+  horizontal: 0
+  jumpHeld: 0
+  jumpPressed: 0
+  crouchHeld: 0
+  crouchPressed: 0
+--- !u!114 &400341555
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 400341549}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d27c2a518dfe4974a84bd22029bae2fd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  drawDebugRaycasts: 1
+  speed: 8
+  crouchSpeedDivisor: 3
+  coyoteDuration: 0.05
+  maxFallSpeed: -25
+  jumpForce: 12
+  jumpHoldDuration: 0.1
+  footOffset: 0.4
+  eyeHeight: 1.5
+  headClearance: 0.5
+  groundDistance: 0.2
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 256
+  isOnGround: 0
+  isJumping: 0
+  isCrouching: 0
+  isHeadBlocked: 0
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
