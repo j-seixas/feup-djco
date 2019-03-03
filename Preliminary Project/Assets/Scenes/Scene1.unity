@@ -940,6 +940,7 @@ GameObject:
   - component: {fileID: 400341553}
   - component: {fileID: 400341555}
   - component: {fileID: 400341554}
+  - component: {fileID: 400341556}
   m_Layer: 9
   m_Name: Player
   m_TagString: Untagged
@@ -1068,15 +1069,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 047af6409de65134389bd241be5625b3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  testTouchControlsInEditor: 0
-  verticalDPadThreshold: 0.5
-  thumbstick: {fileID: 0}
-  jumpButton: {fileID: 0}
   horizontal: 0
   jumpHeld: 0
   jumpPressed: 0
   crouchHeld: 0
   crouchPressed: 0
+  shootPressed: 0
+  shootHeld: 0
 --- !u!114 &400341555
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1107,6 +1106,24 @@ MonoBehaviour:
   isJumping: 0
   isCrouching: 0
   isHeadBlocked: 0
+  direction: 1
+--- !u!114 &400341556
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 400341549}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ed940290d7d015d2d92ee21c52a39be4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fireRate: 0.25
+  projectile: {fileID: 2132457317801282035, guid: 7d6bd88cf64037d8b8d2cab6ff29c5e6,
+    type: 3}
+  bulletOffsetX: 1
+  bulletOffsetY: 1
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
