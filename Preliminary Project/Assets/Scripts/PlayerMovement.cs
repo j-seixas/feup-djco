@@ -18,7 +18,6 @@ public class PlayerMovement : MonoBehaviour
 
 	[Header("Environment Check Properties")]
 	public float footOffset = .4f;			//X Offset of feet raycast
-	public float eyeHeight = 1.5f;			//Height of wall checks
 	public float headClearance = .5f;		//Space needed above the player's head
 	public float groundDistance = .2f;		//Distance player is considered to be on the ground
 	public LayerMask groundLayer;			//Layer of the ground
@@ -35,7 +34,6 @@ public class PlayerMovement : MonoBehaviour
 	
 	float jumpTime;							//Variable to hold jump duration
 	float coyoteTime;						//Variable to hold coyote duration
-	float playerHeight;						//Height of the player
 
 	float originalXScale;					//Original scale on X axis
 	public int direction = 1;				//Direction player is facing
@@ -55,9 +53,6 @@ public class PlayerMovement : MonoBehaviour
 
 		//Record the original x scale of the player
 		originalXScale = transform.localScale.x;
-
-		//Record the player's height from the collider
-		playerHeight = bodyCollider.size.y;
 
 		//Record initial collider size and offset
 		colliderStandSize = bodyCollider.size;
@@ -93,7 +88,7 @@ public class PlayerMovement : MonoBehaviour
 			isOnGround = true;
 
 		//Cast the ray to check above the player's head
-		RaycastHit2D headCheck = Raycast(new Vector2(0f, bodyCollider.size.y), Vector2.up, headClearance);
+		RaycastHit2D headCheck = Raycast(new Vector2(0f, bodyCollider.size.y * transform.localScale.y), Vector2.up, headClearance);
 
 		//If that ray hits, the player's head is blocked
 		if (headCheck)
