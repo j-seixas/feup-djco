@@ -153,7 +153,7 @@ public class PlayerMovement : MonoBehaviour
 			rigidBody.AddForce(new Vector2(0f, jumpForce), ForceMode2D.Impulse);
 
 			//...and tell the Audio Manager to play the jump audio
-			AudioManager.PlayJumpAudio();
+			//AudioManager.PlayJumpAudio();
 		}
 		//Otherwise, if currently within the jump time window...
 		else if (isJumping)
