@@ -32,6 +32,7 @@ public class PlayerMovement : MonoBehaviour
 	BoxCollider2D bodyCollider;				//The collider component
 	Rigidbody2D rigidBody;					//The rigidbody component
 	Animator myAnimator;                    //The Animator component
+	PlayerShooting shooting;				//The shooting component
 	
 	float jumpTime;							//Variable to hold jump duration
 	float coyoteTime;						//Variable to hold coyote duration
@@ -52,6 +53,7 @@ public class PlayerMovement : MonoBehaviour
 		rigidBody = GetComponent<Rigidbody2D>();
 		bodyCollider = GetComponent<BoxCollider2D>();
 		myAnimator = GetComponent<Animator>();
+		shooting = GetComponent<PlayerShooting>();
 
 		//Record the original x scale of the player
 		originalXScale = transform.localScale.x;
@@ -116,7 +118,7 @@ public class PlayerMovement : MonoBehaviour
 		float xVelocity = speed * input.horizontal;
 
 		//If the sign of the velocity and direction don't match, flip the character
-		if (xVelocity * direction < 0f)
+		if (xVelocity * direction < 0f || shooting.shouldFlip)
 			FlipCharacterDirection();
 
 		//If the player is crouching, reduce the velocity

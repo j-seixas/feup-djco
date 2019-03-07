@@ -141,6 +141,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 923c5d6bcd849aa549f4942829724d31, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  velX: 7.5
-  velY: 0
+  velocity: 7.5
   destroyTimeout: 10

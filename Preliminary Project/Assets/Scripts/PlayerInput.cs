@@ -16,8 +16,8 @@ public class PlayerInput : MonoBehaviour
 	[HideInInspector] public bool crouchPressed;	//Bool that stores crouch held
 	[HideInInspector] public bool shootPressed;		//Bool that stores shoot input
 	[HideInInspector] public bool shootHeld;		//Bool that stores shoot held
+	[HideInInspector] public Vector3 mousePosition;	//Vector that store mouse position
 
-	bool dPadCrouchPrev;							//Previous values of touch Thumbstick
 	bool readyToClear;								//Bool used to keep input in sync
 
 
@@ -76,5 +76,8 @@ public class PlayerInput : MonoBehaviour
 
 		shootPressed	= shootPressed || Input.GetButtonDown("Shoot");
 		shootHeld		= shootHeld || Input.GetButton("Shoot");
+
+		//Mouse inputs
+		mousePosition   = Input.mousePosition;
 	}
 }
