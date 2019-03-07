@@ -31,6 +31,7 @@ public class PlayerMovement : MonoBehaviour
 	PlayerInput input;						//The current inputs for the player
 	BoxCollider2D bodyCollider;				//The collider component
 	Rigidbody2D rigidBody;					//The rigidbody component
+	Animator myAnimator;                    //The Animator component
 	
 	float jumpTime;							//Variable to hold jump duration
 	float coyoteTime;						//Variable to hold coyote duration
@@ -50,6 +51,7 @@ public class PlayerMovement : MonoBehaviour
 		input = GetComponent<PlayerInput>();
 		rigidBody = GetComponent<Rigidbody2D>();
 		bodyCollider = GetComponent<BoxCollider2D>();
+		myAnimator = GetComponent<Animator>();
 
 		//Record the original x scale of the player
 		originalXScale = transform.localScale.x;
@@ -123,6 +125,7 @@ public class PlayerMovement : MonoBehaviour
 
 		//Apply the desired velocity 
 		rigidBody.velocity = new Vector2(xVelocity, rigidBody.velocity.y);
+		myAnimator.SetFloat("speed",Mathf.Abs(xVelocity));
 
 		//If the player is on the ground, extend the coyote time window
 		if (isOnGround)
