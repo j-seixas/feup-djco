@@ -3444,7 +3444,7 @@ MonoBehaviour:
   fireRate: 0.25
   projectile: {fileID: 2132457317801282035, guid: 7d6bd88cf64037d8b8d2cab6ff29c5e6,
     type: 3}
-  bulletOffset: {x: 1, y: 1}
+  bulletOffset: {x: 0.7, y: 0.7}
   shouldFlip: 0
 --- !u!95 &400341557
 Animator:

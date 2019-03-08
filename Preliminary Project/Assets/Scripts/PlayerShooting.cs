@@ -13,7 +13,9 @@ public class PlayerShooting : MonoBehaviour
     public GameObject projectile;           //Projectile GameObject
 
     Vector2 bulletPosition;                 //Holds the bullet position
-    public Vector2 bulletOffset = new Vector2(1f,1f); 	//Offset between the bullet and the player
+    public Vector2 bulletOffset = new Vector2(0.7f,0.7f); 	//Offset between the bullet and the player
+
+	Collider2D playerCollider;
 
 	[HideInInspector] public bool shouldFlip;
 
@@ -22,6 +24,7 @@ public class PlayerShooting : MonoBehaviour
 		//Get a reference to the required components
 		input = GetComponent<PlayerInput>();
         movement = GetComponent<PlayerMovement>();
+		playerCollider = GetComponent<Collider2D>();
 	}
 
 	void FixedUpdate()
@@ -56,9 +59,14 @@ public class PlayerShooting : MonoBehaviour
 
 			//Detect overlap before instantiating
 			Vector2 collisionPosition = new Vector2(bulletPosition.x + bulletOffset.x * playerDirection, bulletPosition.y + bulletOffset.y);
-			Collider2D hitCollider = Physics2D.OverlapCircle(collisionPosition, 0.5f);
-			if(hitCollider != null)
-				return;
+			Collider2D[] hitColliders = Physics2D.OverlapCircleAll(collisionPosition, Mathf.Abs(collisionPosition.x - playerCollider.bounds.center.x) - playerCollider.bounds.size.x / 2);
+
+			foreach(Collider2D collider in hitColliders) {
+				if(collider != null && collider != playerCollider && !collider.isTrigger) {
+					//Debug.Log(collider.ToString());
+					return;
+				}
+			}
             
 			GameObject clone = Instantiate(projectile, bulletPosition, Quaternion.identity) as GameObject;
 			Bullet bullet = clone.GetComponent<Bullet>();
