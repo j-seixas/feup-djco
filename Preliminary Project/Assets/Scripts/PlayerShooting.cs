@@ -53,6 +53,12 @@ public class PlayerShooting : MonoBehaviour
 			//Impossible shot (deadzone)
 			//if((playerDirection * bulletDirection.x) < 0)
 			//	return;
+
+			//Detect overlap before instantiating
+			Vector2 collisionPosition = new Vector2(bulletPosition.x + bulletOffset.x * playerDirection, bulletPosition.y + bulletOffset.y);
+			Collider2D hitCollider = Physics2D.OverlapCircle(collisionPosition, 0.5f);
+			if(hitCollider != null)
+				return;
             
 			GameObject clone = Instantiate(projectile, bulletPosition, Quaternion.identity) as GameObject;
 			Bullet bullet = clone.GetComponent<Bullet>();
