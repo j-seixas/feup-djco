@@ -224,9 +224,9 @@ GameObject:
   m_Component:
   - component: {fileID: 114973014}
   - component: {fileID: 114973015}
+  - component: {fileID: 114973018}
   - component: {fileID: 114973016}
   - component: {fileID: 114973017}
-  - component: {fileID: 114973018}
   - component: {fileID: 114973019}
   m_Layer: 8
   m_Name: Trap1

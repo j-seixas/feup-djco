@@ -10,11 +10,13 @@ public class FallingPlatform : MonoBehaviour
     float previousGravity;
     public float gravityScale = 0.2f;
     Rigidbody2D rigidBody;
+    Collider2D triggerBox;
 
     void Start() {
         hasFell = false;
         playerLayer = LayerMask.NameToLayer("Player");
         rigidBody = GetComponent<Rigidbody2D>();
+        triggerBox = GetComponent<Collider2D>();
 
         previousGravity = rigidBody.gravityScale;
         rigidBody.isKinematic = true; 
@@ -30,6 +32,9 @@ public class FallingPlatform : MonoBehaviour
         //Disable subsequent collisions
         if(hasFell)
             return;
+
+        //Disable trigger box
+        triggerBox.enabled = false;
         
         //Let it fall
         hasFell = true;
