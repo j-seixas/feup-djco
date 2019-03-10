@@ -33,7 +33,8 @@ public class PlayerMovement : MonoBehaviour
 	Rigidbody2D rigidBody;					//The rigidbody component
 	Animator myAnimator;                    //The Animator component
 	PlayerShooting shooting;				//The shooting component
-	
+	RopeSystem rope;						//The rope component
+
 	float jumpTime;							//Variable to hold jump duration
 	float coyoteTime;						//Variable to hold coyote duration
 
@@ -54,6 +55,7 @@ public class PlayerMovement : MonoBehaviour
 		bodyCollider = GetComponent<BoxCollider2D>();
 		myAnimator = GetComponent<Animator>();
 		shooting = GetComponent<PlayerShooting>();
+		rope = GetComponent<RopeSystem>();
 
 		//Record the original x scale of the player
 		originalXScale = transform.localScale.x;
@@ -126,9 +128,11 @@ public class PlayerMovement : MonoBehaviour
 			xVelocity /= crouchSpeedDivisor;
 
 		//Apply the desired velocity 
-		rigidBody.velocity = new Vector2(xVelocity, rigidBody.velocity.y);
-		myAnimator.SetFloat("speed",Mathf.Abs(xVelocity));
-
+		if(!rope.isSwinging) {
+			rigidBody.velocity = new Vector2(xVelocity, rigidBody.velocity.y);
+			myAnimator.SetFloat("speed",Mathf.Abs(xVelocity));
+		}
+		
 		//If the player is on the ground, extend the coyote time window
 		if (isOnGround)
 			coyoteTime = Time.time + coyoteDuration;
