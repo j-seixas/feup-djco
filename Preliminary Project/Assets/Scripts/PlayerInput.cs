@@ -10,6 +10,7 @@ using UnityEngine;
 public class PlayerInput : MonoBehaviour
 {
 	[HideInInspector] public float horizontal;		//Float that stores horizontal input
+	[HideInInspector] public float vertical;		//Float that stores vertical input
 	[HideInInspector] public bool jumpHeld;			//Bool that stores jump pressed
 	[HideInInspector] public bool jumpPressed;		//Bool that stores jump held
 	[HideInInspector] public bool crouchHeld;		//Bool that stores crouch pressed
@@ -52,6 +53,7 @@ public class PlayerInput : MonoBehaviour
 
 		//Reset all inputs
 		horizontal		= 0f;
+		vertical		= 0f;
 		jumpPressed		= false;
 		jumpHeld		= false;
 		crouchPressed	= false;
@@ -66,6 +68,7 @@ public class PlayerInput : MonoBehaviour
 	{
 		//Accumulate horizontal axis input
 		horizontal		+= Input.GetAxis("Horizontal");
+		vertical		+= Input.GetAxis("Vertical");
 
 		//Accumulate button inputs
 		jumpPressed		= jumpPressed || Input.GetButtonDown("Jump");

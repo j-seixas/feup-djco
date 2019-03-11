@@ -21,6 +21,7 @@ public class FallingPlatform : MonoBehaviour
         previousGravity = rigidBody.gravityScale;
         rigidBody.isKinematic = true; 
         rigidBody.gravityScale = 0f;
+        rigidBody.mass = 100f;
     }
 
 	void OnTriggerEnter2D(Collider2D collision)
