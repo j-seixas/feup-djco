@@ -128,6 +128,8 @@ public class PlayerMovement : MonoBehaviour
 		//Apply the desired velocity 
 		rigidBody.velocity = new Vector2(xVelocity, rigidBody.velocity.y);
 		myAnimator.SetFloat("speed",Mathf.Abs(xVelocity));
+		myAnimator.SetBool("grounded",isOnGround);
+		myAnimator.SetFloat("yvelocity",0);
 
 		//If the player is on the ground, extend the coyote time window
 		if (isOnGround)
@@ -150,12 +152,14 @@ public class PlayerMovement : MonoBehaviour
 			//...The player is no longer on the groud and is jumping...
 			isOnGround = false;
 			isJumping = true;
+			myAnimator.SetBool("grounded",isOnGround);
 
 			//...record the time the player will stop being able to boost their jump...
 			jumpTime = Time.time + jumpHoldDuration;
 
 			//...add the jump force to the rigidbody...
 			rigidBody.AddForce(new Vector2(0f, jumpForce), ForceMode2D.Impulse);
+			myAnimator.SetFloat("yvelocity",rigidBody.velocity.y);
 
 			//...and tell the Audio Manager to play the jump audio
 			//AudioManager.PlayJumpAudio();
@@ -164,13 +168,15 @@ public class PlayerMovement : MonoBehaviour
 		else if (isJumping)
 		{
 			//...and if jump time is past, set isJumping to false
-			if (jumpTime <= Time.time)
+			if (jumpTime <= Time.time){
 				isJumping = false;
+			}
 		}
 
 		//If player is falling to fast, reduce the Y velocity to the max
 		if (rigidBody.velocity.y < maxFallSpeed)
 			rigidBody.velocity = new Vector2(rigidBody.velocity.x, maxFallSpeed);
+			myAnimator.SetFloat("yvelocity",rigidBody.velocity.y);
 	}
 
 	void FlipCharacterDirection()
