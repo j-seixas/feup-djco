@@ -15,12 +15,16 @@ public class RopeSystem : MonoBehaviour
     private Rigidbody2D ropeHingeAnchorRb;
     private SpriteRenderer ropeHingeAnchorSprite;
     public PlayerMovement playerMovement;
+    public PlayerInput playerInput;
 
     public LineRenderer ropeRenderer;
     public LayerMask ropeLayerMask;
     private float ropeMaxCastDistance = 20f;
     private List<Vector2> ropePositions = new List<Vector2>();
     private bool distanceSet;
+
+    public float climbSpeed = 3f;
+    private bool isColliding;
 
     public bool isSwinging = false;
 
@@ -37,7 +41,7 @@ public class RopeSystem : MonoBehaviour
     {
         // 3
         var worldMousePosition =
-            Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 15f));
+            Camera.main.ScreenToWorldPoint(new Vector3(playerInput.mousePosition.x, playerInput.mousePosition.y, 15f));
         var facingDirection = worldMousePosition - transform.position;
         var aimAngle = Mathf.Atan2(facingDirection.y, facingDirection.x);
         if (aimAngle < 0f)
@@ -65,6 +69,7 @@ public class RopeSystem : MonoBehaviour
 
         HandleInput(aimDirection);
         UpdateRopePositions();
+        HandleRopeLength();
     }
 
     private void SetCrosshairPosition(float aimAngle)
@@ -84,24 +89,22 @@ public class RopeSystem : MonoBehaviour
         // 1
     private void HandleInput(Vector2 aimDirection)
     {
-        if (Input.GetMouseButtonDown(1) && !isSwinging)
+        if (Input.GetButtonDown("Hook") && !isSwinging && !playerMovement.isOnGround)
         {
             // 2
             if (ropeAttached) return;
             ropeRenderer.enabled = true;
 
-            var hit = Physics2D.Raycast(playerPosition, aimDirection, ropeMaxCastDistance, ropeLayerMask);
+            RaycastHit2D hit = Physics2D.Raycast(playerPosition, aimDirection, ropeMaxCastDistance, ropeLayerMask);
             
             // 3
-            if (hit.collider != null)
+            if (hit.collider != null && !hit.collider.isTrigger)
             {
                 isSwinging = true;
                 ropeAttached = true;
                 if (!ropePositions.Contains(hit.point))
                 {
                     // 4
-                    // Jump slightly to distance the player a little from the ground after grappling to something.
-                    //transform.GetComponent<Rigidbody2D>().AddForce(new Vector2(0f, 2f), ForceMode2D.Impulse);
                     ropePositions.Add(hit.point);
                     ropeJoint.distance = Vector2.Distance(playerPosition, hit.point);
                     ropeJoint.enabled = true;
@@ -117,7 +120,7 @@ public class RopeSystem : MonoBehaviour
             }
         }
 
-        else if (Input.GetMouseButtonDown(1) && isSwinging)
+        else if (Input.GetButtonDown("Hook") && isSwinging)
         {
             ResetRope();
         }
@@ -134,6 +137,29 @@ public class RopeSystem : MonoBehaviour
         ropeRenderer.SetPosition(1, transform.position);
         ropePositions.Clear();
         ropeHingeAnchorSprite.enabled = false;
+    }
+
+    private void HandleRopeLength()
+    {
+        // 1
+        if (playerInput.vertical >= 1f && ropeAttached && !isColliding)
+        {
+            ropeJoint.distance -= Time.deltaTime * climbSpeed;
+        }
+        else if (playerInput.vertical < 0f && ropeAttached)
+        {
+            ropeJoint.distance += Time.deltaTime * climbSpeed;
+        }
+    }
+
+    private void OnTriggerStay2D(Collider2D colliderStay)
+    {
+        isColliding = true;
+    }
+
+    private void OnTriggerExit2D(Collider2D colliderOnExit)
+    {
+        isColliding = false;
     }
 
     private void UpdateRopePositions()
