@@ -37,6 +37,7 @@ public class PlayerMovement : MonoBehaviour
 	Animator myAnimator;                    //The Animator component
 	PlayerShooting shooting;				//The shooting component
 	RopeSystem rope;						//The rope component
+	SpriteRenderer sprite;					//The player sprite
 
 	float jumpTime;							//Variable to hold jump duration
 	float coyoteTime;						//Variable to hold coyote duration
@@ -60,6 +61,7 @@ public class PlayerMovement : MonoBehaviour
 		myAnimator = GetComponent<Animator>();
 		shooting = GetComponent<PlayerShooting>();
 		rope = GetComponent<RopeSystem>();
+		sprite = GetComponent<SpriteRenderer>();
 
 		//Record the original x scale of the player
 		originalXScale = transform.localScale.x;
@@ -228,14 +230,8 @@ public class PlayerMovement : MonoBehaviour
 		//Turn the character by flipping the direction
 		direction *= -1;
 
-		//Record the current scale
-		Vector3 scale = transform.localScale;
-
-		//Set the X scale to be the original times the direction
-		scale.x = originalXScale * direction;
-
-		//Apply the new scale
-		transform.localScale = scale;
+		//Flip the sprite
+		sprite.flipX = !sprite.flipX;
 	}
 
 	void Crouch()

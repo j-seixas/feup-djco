@@ -23,6 +23,7 @@ public class RopeSystem : MonoBehaviour
     private List<Vector2> ropePositions = new List<Vector2>();
     private bool distanceSet;
 
+    public Vector3 ropeOffset = new Vector3(0f, 0.5f, 0f);
     public float climbSpeed = 3f;
     private bool isColliding;
 
@@ -218,7 +219,7 @@ public class RopeSystem : MonoBehaviour
             else
             {
                 // 6
-                ropeRenderer.SetPosition(i, transform.position);
+                ropeRenderer.SetPosition(i, transform.position + ropeOffset);
             }
         }
     }
