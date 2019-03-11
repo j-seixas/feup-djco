@@ -123,8 +123,10 @@ public class PlayerMovement : MonoBehaviour
 		else if (!isOnGround && isCrouching)
 			StandUp();
 
-		if(rope.isSwinging)
+		if(rope.isSwinging){
+			myAnimator.SetBool("swinging",true);
 			return;
+		}
 
 		//Calculate the desired velocity based on inputs
 		float xVelocity = speed * input.horizontal;
@@ -193,8 +195,10 @@ public class PlayerMovement : MonoBehaviour
 
 	void SwingMovement()
 	{
-		if(!rope.isSwinging)
+		if(!rope.isSwinging){
+			myAnimator.SetBool("swinging",false);
 			return;
+		}
 
 		if (input.horizontal != 0)
 		{
