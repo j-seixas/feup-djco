@@ -209,7 +209,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 114973013}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1.5, y: 1.07, z: -2.5569947}
+  m_LocalPosition: {x: 1.5, y: 4.05, z: -2.5569947}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2099080907}
@@ -309,7 +309,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 4
+  m_Constraints: 5
 --- !u!61 &114973018
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -2987,7 +2987,6 @@ MonoBehaviour:
   ropeJoint: {fileID: 400341558}
   crosshair: {fileID: 1230974500}
   crosshairSprite: {fileID: 1230974501}
-  playerMovement: {fileID: 0}
   ropeRenderer: {fileID: 400341560}
   ropeLayerMask:
     serializedVersion: 2
