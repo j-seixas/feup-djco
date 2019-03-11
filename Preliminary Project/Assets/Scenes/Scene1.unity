@@ -2905,6 +2905,7 @@ MonoBehaviour:
   maxFallSpeed: -1000000
   jumpForce: 12
   jumpHoldDuration: 0.1
+  swingForce: 4
   footOffset: 0.2
   headClearance: 0.5
   groundDistance: 0.2
@@ -2916,6 +2917,7 @@ MonoBehaviour:
   isCrouching: 0
   isHeadBlocked: 0
   direction: 1
+  ropeHook: {x: 0, y: 0}
 --- !u!114 &400341556
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2987,6 +2989,7 @@ MonoBehaviour:
   ropeJoint: {fileID: 400341558}
   crosshair: {fileID: 1230974500}
   crosshairSprite: {fileID: 1230974501}
+  playerMovement: {fileID: 400341555}
   ropeRenderer: {fileID: 400341560}
   ropeLayerMask:
     serializedVersion: 2

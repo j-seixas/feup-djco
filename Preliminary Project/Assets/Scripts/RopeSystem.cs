@@ -14,6 +14,7 @@ public class RopeSystem : MonoBehaviour
     private Vector2 playerPosition;
     private Rigidbody2D ropeHingeAnchorRb;
     private SpriteRenderer ropeHingeAnchorSprite;
+    public PlayerMovement playerMovement;
 
     public LineRenderer ropeRenderer;
     public LayerMask ropeLayerMask;
@@ -53,9 +54,12 @@ public class RopeSystem : MonoBehaviour
         if (!ropeAttached)
         {
             SetCrosshairPosition(aimAngle);
+            this.isSwinging = false;
         }
         else 
         {
+            this.isSwinging = true;
+            playerMovement.ropeHook = ropePositions.Last();
             crosshairSprite.enabled = false;
         }
 
@@ -97,7 +101,7 @@ public class RopeSystem : MonoBehaviour
                 {
                     // 4
                     // Jump slightly to distance the player a little from the ground after grappling to something.
-                    transform.GetComponent<Rigidbody2D>().AddForce(new Vector2(0f, 2f), ForceMode2D.Impulse);
+                    //transform.GetComponent<Rigidbody2D>().AddForce(new Vector2(0f, 2f), ForceMode2D.Impulse);
                     ropePositions.Add(hit.point);
                     ropeJoint.distance = Vector2.Distance(playerPosition, hit.point);
                     ropeJoint.enabled = true;

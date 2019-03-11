@@ -16,6 +16,9 @@ public class PlayerMovement : MonoBehaviour
 	public float jumpForce = 6.3f;			//Initial force of jump
 	public float jumpHoldDuration = .1f;	//How long the jump key can be held
 
+	[Header("Swing Properties")]
+	public float swingForce = 4f;
+
 	[Header("Environment Check Properties")]
 	public float footOffset = .4f;			//X Offset of feet raycast
 	public float headClearance = .5f;		//Space needed above the player's head
@@ -40,6 +43,7 @@ public class PlayerMovement : MonoBehaviour
 
 	float originalXScale;					//Original scale on X axis
 	public int direction = 1;				//Direction player is facing
+	public Vector2 ropeHook;
 
 	Vector2 colliderStandSize;				//Size of the standing collider
 	Vector2 colliderStandOffset;			//Offset of the standing collider
@@ -77,6 +81,7 @@ public class PlayerMovement : MonoBehaviour
 		//Process ground and air movements
 		GroundMovement();		
 		MidAirMovement();
+		SwingMovement();
 	}
 
 	void PhysicsCheck()
@@ -116,6 +121,9 @@ public class PlayerMovement : MonoBehaviour
 		else if (!isOnGround && isCrouching)
 			StandUp();
 
+		if(rope.isSwinging)
+			return;
+
 		//Calculate the desired velocity based on inputs
 		float xVelocity = speed * input.horizontal;
 
@@ -128,10 +136,8 @@ public class PlayerMovement : MonoBehaviour
 			xVelocity /= crouchSpeedDivisor;
 
 		//Apply the desired velocity 
-		if(!rope.isSwinging) {
-			rigidBody.velocity = new Vector2(xVelocity, rigidBody.velocity.y);
-			myAnimator.SetFloat("speed",Mathf.Abs(xVelocity));
-		}
+		rigidBody.velocity = new Vector2(xVelocity, rigidBody.velocity.y);
+		myAnimator.SetFloat("speed",Mathf.Abs(xVelocity));
 		
 		//If the player is on the ground, extend the coyote time window
 		if (isOnGround)
@@ -175,6 +181,40 @@ public class PlayerMovement : MonoBehaviour
 		//If player is falling to fast, reduce the Y velocity to the max
 		if (rigidBody.velocity.y < maxFallSpeed)
 			rigidBody.velocity = new Vector2(rigidBody.velocity.x, maxFallSpeed);
+	}
+
+	void SwingMovement()
+	{
+		if(!rope.isSwinging)
+			return;
+
+		if (input.horizontal != 0)
+		{
+			//If the sign of the velocity and direction don't match, flip the character
+			if (input.horizontal * direction < 0f || shooting.shouldFlip)
+				FlipCharacterDirection();
+
+			// 1 - Get a normalized direction vector from the player to the hook point
+			Vector2 playerToHookDirection = (ropeHook - (Vector2)transform.position).normalized;
+
+			// 2 - Inverse the direction to get a perpendicular direction
+			Vector2 perpendicularDirection;
+			if (input.horizontal < 0)
+			{
+				perpendicularDirection = new Vector2(-playerToHookDirection.y, playerToHookDirection.x);
+				Vector2 leftPerpPos = (Vector2)transform.position - perpendicularDirection * -2f;
+				Debug.DrawLine(transform.position, leftPerpPos, Color.green, 0f);
+			}
+			else
+			{
+				perpendicularDirection = new Vector2(playerToHookDirection.y, -playerToHookDirection.x);
+				Vector2 rightPerpPos = (Vector2)transform.position + perpendicularDirection * 2f;
+				Debug.DrawLine(transform.position, rightPerpPos, Color.green, 0f);
+			}
+
+			Vector2 force = perpendicularDirection * swingForce;
+			rigidBody.AddForce(force, ForceMode2D.Force);
+		}
 	}
 
 	void FlipCharacterDirection()
