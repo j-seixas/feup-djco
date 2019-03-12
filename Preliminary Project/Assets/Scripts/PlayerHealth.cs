@@ -5,32 +5,37 @@ using UnityEngine;
 
 public class PlayerHealth : MonoBehaviour
 {
-	bool isAlive = true;				//Stores the player's "alive" state
-	int trapsLayer;						//The layer the traps are on
-
+	public int health = 5;
+	public bool isAlive = true;
+	private int trapLayer;
+	private int enemyBulletsLayer;
 
 	void Start()
 	{
-		//Get the integer representation of the "Traps" layer
-		trapsLayer = LayerMask.NameToLayer("Traps");
-	}
+		trapLayer = LayerMask.NameToLayer("Traps");
+		enemyBulletsLayer = LayerMask.NameToLayer("EnemyBullets");
+	} 
 
-	void OnTriggerEnter2D(Collider2D collision)
+
+	void OnCollisionEnter2D(Collision2D collision)
 	{
-		//If the collided object isn't on the Traps layer OR if the player isn't currently
-		//alive, exit. This is more efficient than string comparisons using Tags
-		if (collision.gameObject.layer != trapsLayer || !isAlive)
+		if(!isAlive)
 			return;
 
-		//Trap was hit, so set the player's alive state to false
-		isAlive = false;
+		if (trapLayer == collision.gameObject.layer) {
+			//Falling platform is still falling
+			if(!collision.gameObject.GetComponent<FallingPlatform>().hasFinishedFalling)
+				health = -1;
+		}
+		//TODO Add more stuff that causes the player to lose health
+		//else if (enemyBulletsLayer == collision.gameObject.layer)
+		//	health--;
 
-		//Disable player game object
-		gameObject.SetActive(false);
-
-		//Tell the Game Manager that the player died and tell the Audio Manager to play
-		//the death audio
-		//GameManager.PlayerDied();
-		//AudioManager.PlayDeathAudio();
+		//No health left, the player is dead
+		if(health <= 0) {
+			isAlive = false;
+			gameObject.SetActive(false); //Disable player game object
+			Debug.Log("Player died");
+		}
 	}
 }

@@ -2578,6 +2578,7 @@ GameObject:
   - component: {fileID: 400341550}
   - component: {fileID: 400341552}
   - component: {fileID: 400341553}
+  - component: {fileID: 400341561}
   - component: {fileID: 400341555}
   - component: {fileID: 400341554}
   - component: {fileID: 400341556}
@@ -2931,6 +2932,22 @@ LineRenderer:
     generateLightingData: 0
   m_UseWorldSpace: 1
   m_Loop: 0
+--- !u!114 &400341561
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 400341549}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: abb32a8c2cffb744aadebe8ef1af88e6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isAlive: 1
+  layerMask:
+    serializedVersion: 2
+    m_Bits: 6144
 --- !u!213 &490514551
 Sprite:
   m_ObjectHideFlags: 0
