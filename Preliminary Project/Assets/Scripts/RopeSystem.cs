@@ -23,9 +23,10 @@ public class RopeSystem : MonoBehaviour
     private List<Vector2> ropePositions = new List<Vector2>();
     private bool distanceSet;
 
-    public Vector3 ropeOffset = new Vector3(0f, 0.5f, 0f);
+    public float ropeOffset = 1f;
     public float climbSpeed = 3f;
     private bool isColliding;
+    private float lineAngle;
 
     public bool isSwinging = false;
 
@@ -41,17 +42,17 @@ public class RopeSystem : MonoBehaviour
     void Update()
     {
         // 3
-        var worldMousePosition =
+        Vector3 worldMousePosition =
             Camera.main.ScreenToWorldPoint(new Vector3(playerInput.mousePosition.x, playerInput.mousePosition.y, 15f));
-        var facingDirection = worldMousePosition - transform.position;
-        var aimAngle = Mathf.Atan2(facingDirection.y, facingDirection.x);
+        Vector3 facingDirection = worldMousePosition - transform.position;
+        float aimAngle = Mathf.Atan2(facingDirection.y, facingDirection.x);
         if (aimAngle < 0f)
         {
             aimAngle = Mathf.PI * 2 + aimAngle;
         }
 
         // 4
-        var aimDirection = Quaternion.Euler(0, 0, aimAngle * Mathf.Rad2Deg) * Vector2.right;
+        Vector3 aimDirection = Quaternion.Euler(0, 0, aimAngle * Mathf.Rad2Deg) * Vector2.right;
         // 5
         playerPosition = transform.position;
 
@@ -66,6 +67,12 @@ public class RopeSystem : MonoBehaviour
             this.isSwinging = true;
             playerMovement.ropeHook = ropePositions.Last();
             crosshairSprite.enabled = false;
+
+            //Rotate sprite
+            Vector2 lineDirection = playerMovement.ropeHook - (Vector2)transform.position;
+            lineAngle = Mathf.Atan2(lineDirection.y, lineDirection.x);
+            if(lineAngle < 0) aimAngle = Mathf.PI * 2 + aimAngle;
+            transform.rotation = Quaternion.Euler(transform.rotation.x, transform.rotation.y, -1 * (90 - lineAngle * 180 / Mathf.PI));
         }
 
         HandleInput(aimDirection);
@@ -138,6 +145,7 @@ public class RopeSystem : MonoBehaviour
         ropeRenderer.SetPosition(1, transform.position);
         ropePositions.Clear();
         ropeHingeAnchorSprite.enabled = false;
+        transform.rotation = Quaternion.Euler(transform.rotation.x, transform.rotation.y, 0);
     }
 
     private void HandleRopeLength()
@@ -219,7 +227,7 @@ public class RopeSystem : MonoBehaviour
             else
             {
                 // 6
-                ropeRenderer.SetPosition(i, transform.position + ropeOffset);
+                ropeRenderer.SetPosition(i, transform.position + new Vector3(ropeOffset * Mathf.Cos(lineAngle), ropeOffset * Mathf.Sin(lineAngle), 0));
             }
         }
     }
