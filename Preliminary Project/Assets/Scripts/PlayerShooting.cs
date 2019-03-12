@@ -9,6 +9,7 @@ public class PlayerShooting : MonoBehaviour
 
 	PlayerInput input;						//The current inputs for the player
     PlayerMovement movement;                //The current movement for the player
+	Animator myAnimator;   
 
     public GameObject projectile;           //Projectile GameObject
 
@@ -25,10 +26,12 @@ public class PlayerShooting : MonoBehaviour
 		input = GetComponent<PlayerInput>();
         movement = GetComponent<PlayerMovement>();
 		playerCollider = GetComponent<Collider2D>();
+		myAnimator = GetComponent<Animator>();
 	}
 
 	void FixedUpdate()
 	{
+		myAnimator.SetBool("shooting",false);
 		HandleShoot();
 	}
 
@@ -38,6 +41,7 @@ public class PlayerShooting : MonoBehaviour
 
 		if ((input.shootPressed || input.shootHeld) && Time.time > nextFire) {
             nextFire = Time.time + fireRate;
+			myAnimator.SetBool("shooting",true);
 
 			//Calculate shooting direction
 			Vector3 mousePosition = input.mousePosition;
@@ -70,6 +74,7 @@ public class PlayerShooting : MonoBehaviour
             
 			GameObject clone = Instantiate(projectile, bulletPosition, Quaternion.identity) as GameObject;
 			Bullet bullet = clone.GetComponent<Bullet>();
+
 			bullet.SetProperties(playerDirection, bulletOffset, bulletDirection,this.gameObject);
 			//Debug.Log("Shot");
 		}
