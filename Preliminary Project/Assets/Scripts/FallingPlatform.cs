@@ -6,15 +6,19 @@ using UnityEngine;
 public class FallingPlatform : MonoBehaviour
 {
     int playerLayer;
+    int platformsLayer;
     bool hasFell;
     float previousGravity;
     public float gravityScale = 0.2f;
+    public bool hasFinishedFalling;
     Rigidbody2D rigidBody;
     Collider2D triggerBox;
 
     void Start() {
         hasFell = false;
+        hasFinishedFalling = false;
         playerLayer = LayerMask.NameToLayer("Player");
+        platformsLayer = LayerMask.NameToLayer("Platforms");
         rigidBody = GetComponent<Rigidbody2D>();
         triggerBox = GetComponent<Collider2D>();
 
@@ -44,4 +48,11 @@ public class FallingPlatform : MonoBehaviour
 
         //Debug.Log("Platform falling");
 	}
+
+    void OnCollisionEnter2D(Collision2D collision) 
+    {
+        //When a platform is hit, it has finished falling
+        if(platformsLayer == collision.gameObject.layer) 
+            hasFinishedFalling = true;
+    }
 }
