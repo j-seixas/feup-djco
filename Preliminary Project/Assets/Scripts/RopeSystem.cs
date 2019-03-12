@@ -163,12 +163,14 @@ public class RopeSystem : MonoBehaviour
 
     private void OnTriggerStay2D(Collider2D colliderStay)
     {
-        isColliding = true;
+        if(!colliderStay.isTrigger)
+            isColliding = true;
     }
 
     private void OnTriggerExit2D(Collider2D colliderOnExit)
     {
-        isColliding = false;
+        if(!colliderOnExit.isTrigger)
+            isColliding = false;
     }
 
     private void UpdateRopePositions()

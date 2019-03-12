@@ -36,9 +36,8 @@ public class PlayerHealth : MonoBehaviour
 			if(!collision.gameObject.GetComponent<FallingPlatform>().hasFinishedFalling)
 				health = -1;
 		}
-		//TODO Add more stuff that causes the player to lose health
-		//else if (enemyBulletsLayer == collision.gameObject.layer)
-		//	health--;
+		else if (enemyBulletsLayer == collision.gameObject.layer)
+			health--;
 	}
 
 	void OnTriggerExit2D(Collider2D collider) {
