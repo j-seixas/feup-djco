@@ -19,6 +19,7 @@ public class RopeSystem : MonoBehaviour
 
     public LineRenderer ropeRenderer;
     public LayerMask ropeLayerMask;
+    public LayerMask cancelLayerMask;
     private float ropeMaxCastDistance = 20f;
     private List<Vector2> ropePositions = new List<Vector2>();
     private bool distanceSet;
@@ -158,6 +159,14 @@ public class RopeSystem : MonoBehaviour
         else if (playerInput.vertical < 0f && ropeAttached)
         {
             ropeJoint.distance += Time.deltaTime * climbSpeed;
+        }
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        //Check if hook should be reset
+        if(((1<<collision.gameObject.layer) & cancelLayerMask.value) != 0) {
+            ResetRope();
         }
     }
 

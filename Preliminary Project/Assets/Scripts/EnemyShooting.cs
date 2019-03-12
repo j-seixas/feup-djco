@@ -4,7 +4,7 @@ public class EnemyShooting : MonoBehaviour
 {
 	[Header("Shooting Properties")]
 	public float fireRate = 0.25f;			//Cooldown before the next shot
-    public float maxDistance = 20f;         //Maximum shooting distance
+    public float maxDistance = 10f;         //Maximum shooting distance
     public int bulletsPerRound = 12;        //Bullets per round
     public float reloadTime = 3f;           //Reload time
 	public float accuracy = 1f;				//Enemy shooting accuracy

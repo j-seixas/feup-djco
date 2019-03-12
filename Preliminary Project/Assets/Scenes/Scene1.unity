@@ -4177,6 +4177,9 @@ MonoBehaviour:
   ropeLayerMask:
     serializedVersion: 2
     m_Bits: 256
+  cancelLayerMask:
+    serializedVersion: 2
+    m_Bits: 2304
   ropeOffset: 1
   climbSpeed: 3
   isSwinging: 0
