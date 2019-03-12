@@ -7,6 +7,7 @@ public class EnemyShooting : MonoBehaviour
     public float maxDistance = 20f;         //Maximum shooting distance
     public int bulletsPerRound = 12;        //Bullets per round
     public float reloadTime = 3f;           //Reload time
+	public float accuracy = 1f;				//Enemy shooting accuracy
 
     private bool reloading;                 //Is the enemy reloading?
     private int bulletCounter;              //Bullet counter for rounds
@@ -22,6 +23,8 @@ public class EnemyShooting : MonoBehaviour
     public GameObject player;
     private SpriteRenderer sprite;
 
+	private BoxCollider2D playerCollider;
+
 
     private int direction;
 
@@ -30,6 +33,7 @@ public class EnemyShooting : MonoBehaviour
 		//Get a reference to the required components
 		enemyCollider = GetComponent<Collider2D>();
         sprite = GetComponent<SpriteRenderer>();
+		playerCollider = player.GetComponent<BoxCollider2D>();
         bulletCounter = 0;
         reloadCounter = 0f;
         direction = 1;
@@ -54,13 +58,16 @@ public class EnemyShooting : MonoBehaviour
             reloading = false;
         }
 
-        float distance = Vector3.Distance(player.transform.position, transform.position);
+		Vector2 playerCenter = playerCollider.bounds.center;
+        float distance = Vector3.Distance(playerCenter, transform.position);
 
 		if (distance < maxDistance && Time.time > nextFire && !reloading) {
             nextFire = Time.time + fireRate;
 
 			//Calculate shooting direction
-            Vector3 shootingTarget = player.transform.position;
+            Vector3 shootingTarget = playerCenter;
+			//Add random noise
+			shootingTarget += (Vector3)Random.insideUnitCircle * accuracy;
 			Vector2 bulletDirection = shootingTarget - transform.position; //Initial bullet direction
 			
 			//The player should flip if it's shooting in a diferent direction in relation to its current direction
