@@ -20,15 +20,19 @@ public class EnemyShooting : MonoBehaviour
 
 	Collider2D enemyCollider;
     public GameObject player;
+    private SpriteRenderer sprite;
 
-	[HideInInspector] public bool shouldFlip;
+
+    private int direction;
 
 	void Start ()
 	{
 		//Get a reference to the required components
 		enemyCollider = GetComponent<Collider2D>();
+        sprite = GetComponent<SpriteRenderer>();
         bulletCounter = 0;
         reloadCounter = 0f;
+        direction = 1;
 	}
 
 	void FixedUpdate()
@@ -38,8 +42,6 @@ public class EnemyShooting : MonoBehaviour
 
 	void HandleShoot()
 	{
-		shouldFlip = false;
-
         //Can't shoot, reload
         if(!reloading && bulletCounter >= bulletsPerRound) {
             reloadCounter = Time.time + reloadTime;
@@ -59,22 +61,22 @@ public class EnemyShooting : MonoBehaviour
 
 			//Calculate shooting direction
             Vector3 shootingTarget = player.transform.position;
-			Vector2 bulletDirection = shootingTarget - transform.localPosition; //Initial bullet direction
+			Vector2 bulletDirection = shootingTarget - transform.position; //Initial bullet direction
 			
 			//The player should flip if it's shooting in a diferent direction in relation to its current direction
-			//shouldFlip = (movement.direction * bulletDirection.x) < 0;
-			//int playerDirection = shouldFlip ? -movement.direction : movement.direction;
+			bool shouldFlip = (direction * bulletDirection.x) < 0;
+			int playerDirection = shouldFlip ? -direction : direction;
             bulletPosition = transform.position;
 
 			//Update bullet direction with the bullet offset
-			//bulletDirection = mousePositionWorld - (transform.localPosition + new Vector3(bulletOffset.x * playerDirection, bulletOffset.y, 0));
+			bulletDirection = shootingTarget - (transform.position + new Vector3(bulletOffset.x * playerDirection, bulletOffset.y, 0));
 
 			//Impossible shot (deadzone)
 			//if((playerDirection * bulletDirection.x) < 0)
 			//	return;
 
 			//Detect overlap before instantiating
-			Vector2 collisionPosition = new Vector2(bulletPosition.x + bulletOffset.x /** playerDirection*/, bulletPosition.y + bulletOffset.y);
+			Vector2 collisionPosition = new Vector2(bulletPosition.x + bulletOffset.x * playerDirection, bulletPosition.y + bulletOffset.y);
 			Collider2D[] hitColliders = Physics2D.OverlapCircleAll(collisionPosition, Mathf.Abs(collisionPosition.x - enemyCollider.bounds.center.x) - enemyCollider.bounds.size.x / 2);
 
 			foreach(Collider2D collider in hitColliders) {
@@ -89,8 +91,13 @@ public class EnemyShooting : MonoBehaviour
 			GameObject clone = Instantiate(projectile, bulletPosition, Quaternion.identity) as GameObject;
             clone.layer = LayerMask.NameToLayer("EnemyBullets");
 			Bullet bullet = clone.GetComponent<Bullet>();
-			bullet.SetProperties(1/*playerDirection*/, bulletOffset, bulletDirection,this.gameObject);
+			bullet.SetProperties(playerDirection, bulletOffset, bulletDirection,this.gameObject);
 			//Debug.Log("Shot");
+
+            if(shouldFlip) {
+                sprite.flipX = !sprite.flipX;
+                direction *= -1;
+            }
 		}
     }
 }

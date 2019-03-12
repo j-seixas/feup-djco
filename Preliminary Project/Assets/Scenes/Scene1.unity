@@ -2625,7 +2625,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 400341549}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -7.37, y: 2.93, z: 0}
+  m_LocalPosition: {x: -6.41, y: -0.64, z: 0}
   m_LocalScale: {x: 5, y: 5, z: 1}
   m_Children:
   - {fileID: 1230974500}
@@ -3453,7 +3453,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 519420028}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.03125, y: 2.1, z: -15}
+  m_LocalPosition: {x: -1.03125, y: 0.1789329, z: -15}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -9786,7 +9786,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1540928184}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 10.24, y: 1.22, z: 0}
+  m_LocalPosition: {x: 10.88, y: 1.36, z: 0}
   m_LocalScale: {x: 5, y: 5, z: 1}
   m_Children: []
   m_Father: {fileID: 734170492}
@@ -9907,7 +9907,6 @@ MonoBehaviour:
     type: 3}
   bulletOffset: {x: 0.7, y: 0.7}
   player: {fileID: 400341549}
-  shouldFlip: 0
 --- !u!1 &1697415370
 GameObject:
   m_ObjectHideFlags: 0
@@ -9972,7 +9971,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1697415370}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -7.37, y: 3.7489328, z: -15}
+  m_LocalPosition: {x: -6.41, y: 0.17893285, z: -15}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 671087059}
