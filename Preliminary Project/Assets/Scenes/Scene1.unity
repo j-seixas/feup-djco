@@ -9829,7 +9829,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 22629427428b74495baee29d505af976, type: 3}
+  m_Sprite: {fileID: 21300000, guid: c21ebee3899bb420095c4beb04117e44, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -9874,18 +9874,18 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.0035263076, y: 0.17}
+  m_Offset: {x: -0.07096943, y: 0.18405071}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0}
-    oldSize: {x: 0.19, y: 0.34}
+    oldSize: {x: 0.53, y: 0.4}
     newSize: {x: 0.19, y: 0.34}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.1406314, y: 0.34}
+  m_Size: {x: 0.27551758, y: 0.36810142}
   m_EdgeRadius: 0
 --- !u!114 &1540928189
 MonoBehaviour:
@@ -9901,7 +9901,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   fireRate: 0.25
   maxDistance: 20
-  projectile: {fileID: 2132457317801282035, guid: 7d6bd88cf64037d8b8d2cab6ff29c5e6,
+  bulletsPerRound: 12
+  reloadTime: 3
+  projectile: {fileID: 574150401529755062, guid: ca52e2088dd9924788199d64d9261a18,
     type: 3}
   bulletOffset: {x: 0.7, y: 0.7}
   player: {fileID: 400341549}
