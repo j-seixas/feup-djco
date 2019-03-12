@@ -9,6 +9,7 @@ public class PlayerHealth : MonoBehaviour
 	public bool isAlive = true;
 	private int trapLayer;
 	private int enemyBulletsLayer;
+	public BoxCollider2D worldCollider;
 
 	void Start()
 	{
@@ -16,6 +17,14 @@ public class PlayerHealth : MonoBehaviour
 		enemyBulletsLayer = LayerMask.NameToLayer("EnemyBullets");
 	} 
 
+	void Update() {
+		//No health left, the player is dead
+		if(health <= 0) {
+			isAlive = false;
+			gameObject.SetActive(false); //Disable player game object
+			Debug.Log("Player died");
+		}
+	}
 
 	void OnCollisionEnter2D(Collision2D collision)
 	{
@@ -30,12 +39,14 @@ public class PlayerHealth : MonoBehaviour
 		//TODO Add more stuff that causes the player to lose health
 		//else if (enemyBulletsLayer == collision.gameObject.layer)
 		//	health--;
+	}
 
-		//No health left, the player is dead
-		if(health <= 0) {
-			isAlive = false;
-			gameObject.SetActive(false); //Disable player game object
-			Debug.Log("Player died");
-		}
+	void OnTriggerExit2D(Collider2D collider) {
+		if(!isAlive)
+			return;
+
+		//Player exceeded world bounds
+		if(worldCollider == collider)
+			health = -1;
 	}
 }
