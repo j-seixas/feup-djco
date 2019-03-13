@@ -4,6 +4,7 @@
 
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using System.Collections;
 using System.Collections.Generic;
 
 public class GameManager : MonoBehaviour
@@ -14,6 +15,7 @@ public class GameManager : MonoBehaviour
 	static GameManager current;
 
 	public float deathSequenceDuration = 1f;	//How long player death takes before restarting
+	private int numberScenes;					//Number of scenes in the game
 
 	bool isGameOver;							//Is the game currently over?
 
@@ -32,6 +34,11 @@ public class GameManager : MonoBehaviour
 
 		//Persist this object between scene reloads
 		DontDestroyOnLoad(gameObject);
+	}
+
+	void Start()
+	{
+		numberScenes = SceneManager.sceneCountInBuildSettings;
 	}
 
 	void Update()
@@ -76,4 +83,19 @@ public class GameManager : MonoBehaviour
 		//Reload the current scene
 		SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex); 
 	}
+
+	public static void PlayerReachedNextLevel()
+	{
+		int index = SceneManager.GetActiveScene().buildIndex + 1;
+
+		//Check if there are more levels
+		if(index >= current.numberScenes) {
+			GameManager.PlayerWon();
+			Debug.Log("Won");
+			return;
+		}
+
+		//Loads the next scene
+    	SceneManager.LoadScene(index);
+	}  
 }
