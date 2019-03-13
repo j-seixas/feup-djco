@@ -12,6 +12,7 @@ public class EnemyShooting : MonoBehaviour
     private bool reloading;                 //Is the enemy reloading?
     private int bulletCounter;              //Bullet counter for rounds
     private float reloadCounter;            //Reload counter
+	Animator enemyAnimator;   
 
 	float nextFire = 0f;					//Variable to hold shoot cooldown
     public GameObject projectile;           //Projectile GameObject
@@ -37,10 +38,12 @@ public class EnemyShooting : MonoBehaviour
         bulletCounter = 0;
         reloadCounter = 0f;
         direction = 1;
+		enemyAnimator = GetComponent<Animator>();
 	}
 
 	void FixedUpdate()
 	{
+		enemyAnimator.SetBool("enemy_shooting",false);
 		HandleShoot();
 	}
 
@@ -50,6 +53,7 @@ public class EnemyShooting : MonoBehaviour
         if(!reloading && bulletCounter >= bulletsPerRound) {
             reloadCounter = Time.time + reloadTime;
             reloading = true;
+			enemyAnimator.SetBool("enemy_shooting",false);
         }
 
         //Reload finished
@@ -63,6 +67,7 @@ public class EnemyShooting : MonoBehaviour
 
 		if (distance < maxDistance && Time.time > nextFire && !reloading) {
             nextFire = Time.time + fireRate;
+			enemyAnimator.SetBool("enemy_shooting",true);
 
 			//Calculate shooting direction
             Vector3 shootingTarget = playerCenter;
