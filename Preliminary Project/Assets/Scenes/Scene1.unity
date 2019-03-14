@@ -3829,7 +3829,7 @@ GameObject:
   - component: {fileID: 233430260}
   - component: {fileID: 233430256}
   - component: {fileID: 233430257}
-  m_Layer: 8
+  m_Layer: 13
   m_Name: MP1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3967,7 +3967,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1
+  m_Mass: 50
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 1
@@ -4310,7 +4310,7 @@ MonoBehaviour:
   groundDistance: 0.2
   groundLayer:
     serializedVersion: 2
-    m_Bits: 2304
+    m_Bits: 10496
   isOnMovingPlatform: 0
   isOnGround: 0
   isJumping: 0
@@ -32013,12 +32013,12 @@ PrefabInstance:
     - target: {fileID: 1509695483989306979, guid: 7f8f2d45e48d14b37b1b6943f0a87a20,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 32.322
+      value: 44.77
       objectReference: {fileID: 0}
     - target: {fileID: 1509695483989306979, guid: 7f8f2d45e48d14b37b1b6943f0a87a20,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 5.32
+      value: 5.37
       objectReference: {fileID: 0}
     - target: {fileID: 1509695483989306979, guid: 7f8f2d45e48d14b37b1b6943f0a87a20,
         type: 3}
