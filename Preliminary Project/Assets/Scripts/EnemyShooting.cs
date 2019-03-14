@@ -107,7 +107,7 @@ public class EnemyShooting : MonoBehaviour
 			//Debug.Log("Shot");
 
             if(shouldFlip) {
-                sprite.flipX = !sprite.flipX;
+                transform.localScale = new Vector3(-1 * transform.localScale.x, transform.localScale.y, transform.localScale.z);
                 direction *= -1;
             }
 		}
