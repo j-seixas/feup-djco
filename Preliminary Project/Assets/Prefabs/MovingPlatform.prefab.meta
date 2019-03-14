@@ -1,6 +1,12 @@
 fileFormatVersion: 2
+<<<<<<< HEAD:Preliminary Project/Assets/Prefabs/MovingPlatform.prefab.meta
 guid: bc0cfddddc05d0fea82b1f454178dc57
 PrefabImporter:
+=======
+guid: 932a5cc7045954a4b9e3036f19060118
+folderAsset: yes
+DefaultImporter:
+>>>>>>> 903f23b77c4704a58bdd97bf52a17056a14ced7c:Preliminary Project/Assets/Tilemaps/Tiles/Library.meta
   externalObjects: {}
   userData: 
   assetBundleName: 
