@@ -3828,6 +3828,7 @@ GameObject:
   - component: {fileID: 233430258}
   - component: {fileID: 233430260}
   - component: {fileID: 233430256}
+  - component: {fileID: 233430257}
   m_Layer: 8
   m_Name: MP1
   m_TagString: Untagged
@@ -3868,6 +3869,18 @@ DistanceJoint2D:
   m_AutoConfigureDistance: 1
   m_Distance: 4.677205
   m_MaxDistanceOnly: 0
+--- !u!114 &233430257
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 233430254}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 457ed77e21631b67a952fcf3364d42af, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!61 &233430258
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -4298,6 +4311,7 @@ MonoBehaviour:
   groundLayer:
     serializedVersion: 2
     m_Bits: 2304
+  isOnMovingPlatform: 0
   isOnGround: 0
   isJumping: 0
   isCrouching: 0
@@ -31990,6 +32004,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Exit
+      objectReference: {fileID: 0}
+    - target: {fileID: 1509695483989306976, guid: 7f8f2d45e48d14b37b1b6943f0a87a20,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1509695483989306979, guid: 7f8f2d45e48d14b37b1b6943f0a87a20,
         type: 3}

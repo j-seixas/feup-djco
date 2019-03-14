@@ -26,6 +26,7 @@ public class PlayerMovement : MonoBehaviour
 	public LayerMask groundLayer;			//Layer of the ground
 
 	[Header ("Status Flags")]
+	public bool isOnMovingPlatform;
 	public bool isOnGround;					//Is the player on the ground?
 	public bool isJumping;					//Is player jumping?
 	public bool isCrouching;				//Is player crouching?
@@ -50,6 +51,8 @@ public class PlayerMovement : MonoBehaviour
 	Vector2 colliderStandOffset;			//Offset of the standing collider
 	Vector2 colliderCrouchSize;				//Size of the crouching collider
 	Vector2 colliderCrouchOffset;			//Offset of the crouching collider
+
+	private Rigidbody2D movingPlatform;
 
 
 	void Start ()
@@ -91,14 +94,26 @@ public class PlayerMovement : MonoBehaviour
 		//Start by assuming the player isn't on the ground and the head isn't blocked
 		isOnGround = false;
 		isHeadBlocked = false;
+		isOnMovingPlatform = false;
 
 		//Cast rays for the left and right foot
 		RaycastHit2D leftCheck = Raycast(new Vector2(-footOffset, 0f), Vector2.down, groundDistance);
 		RaycastHit2D rightCheck = Raycast(new Vector2(footOffset, 0f), Vector2.down, groundDistance);
 
 		//If either ray hit the ground, the player is on the ground
-		if (leftCheck || rightCheck)
+		if (leftCheck || rightCheck) {
 			isOnGround = true;
+
+			//Check if is in moving platform
+			if(leftCheck && (leftCheck.transform.gameObject.GetComponent("MovingPlatform") as MovingPlatform) != null) {
+				movingPlatform = leftCheck.rigidbody;
+				isOnMovingPlatform = true;
+			}
+			else if(rightCheck && (rightCheck.transform.gameObject.GetComponent("MovingPlatform") as MovingPlatform) != null) {
+				movingPlatform = rightCheck.rigidbody;
+				isOnMovingPlatform = true;
+			}
+		}
 
 		//Cast the ray to check above the player's head
 		RaycastHit2D headCheck = Raycast(new Vector2(0f, bodyCollider.size.y * transform.localScale.y), Vector2.up, headClearance);
@@ -141,6 +156,8 @@ public class PlayerMovement : MonoBehaviour
 
 		//Apply the desired velocity 
 		rigidBody.velocity = new Vector2(xVelocity, rigidBody.velocity.y);
+		if(isOnMovingPlatform)
+			transform.position += new Vector3(movingPlatform.velocity.x * Time.deltaTime, movingPlatform.velocity.y * Time.deltaTime, 0);
 		myAnimator.SetFloat("speed",Mathf.Abs(xVelocity));
 		myAnimator.SetBool("grounded",isOnGround);
 		myAnimator.SetFloat("yvelocity",0);
