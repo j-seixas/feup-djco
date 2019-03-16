@@ -42,6 +42,7 @@ public class PlayerShooting : MonoBehaviour
 		if ((input.shootPressed || input.shootHeld) && Time.time > nextFire) {
             nextFire = Time.time + fireRate;
 			myAnimator.SetBool("shooting",true);
+			SoundManager.PlaySound("player_shot");
 
 			//Calculate shooting direction
 			Vector3 mousePosition = input.mousePosition;

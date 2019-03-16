@@ -21,6 +21,7 @@ public class PlayerHealth : MonoBehaviour
 		//No health left, the player is dead
 		if(health <= 0) {
 			isAlive = false;
+			SoundManager.PlaySound("hit");
 			gameObject.SetActive(false); //Disable player game object
 			//Debug.Log("Player died");
 			GameManager.PlayerDied();
@@ -36,9 +37,12 @@ public class PlayerHealth : MonoBehaviour
 			//Falling platform is still falling
 			if(!collision.gameObject.GetComponent<FallingPlatform>().hasFinishedFalling)
 				health = -1;
+	
 		}
-		else if (enemyBulletsLayer == collision.gameObject.layer)
+		else if (enemyBulletsLayer == collision.gameObject.layer){
 			health--;
+			SoundManager.PlaySound("hit");
+		}
 	}
 
 	void OnTriggerExit2D(Collider2D collider) {

@@ -4,10 +4,10 @@ public class EnemyShooting : MonoBehaviour
 {
 	[Header("Shooting Properties")]
 	public float fireRate = 0.25f;			//Cooldown before the next shot
-    public float maxDistance = 10f;         //Maximum shooting distance
-    public int bulletsPerRound = 12;        //Bullets per round
+    public float maxDistance = 20f;         //Maximum shooting distance
+    public int bulletsPerRound = 4;        //Bullets per round
     public float reloadTime = 3f;           //Reload time
-	public float accuracy = 1f;				//Enemy shooting accuracy
+	public float accuracy = 1.5f;				//Enemy shooting accuracy
 
     private bool reloading;                 //Is the enemy reloading?
     private int bulletCounter;              //Bullet counter for rounds
@@ -68,6 +68,7 @@ public class EnemyShooting : MonoBehaviour
 		if (distance < maxDistance && Time.time > nextFire && !reloading) {
             nextFire = Time.time + fireRate;
 			enemyAnimator.SetBool("enemy_shooting",true);
+			SoundManager.PlaySound("shots");
 
 			//Calculate shooting direction
             Vector3 shootingTarget = playerCenter;
