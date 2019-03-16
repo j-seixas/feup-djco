@@ -6,7 +6,25 @@ public class SoundManager : MonoBehaviour
 {
 
     public static AudioClip stepSound,jumpSound,landSound,playershot,shots,hitSound,trapHit;
-    static AudioSource audiosrc;
+    public static AudioSource audiosrc;
+
+    static SoundManager current;            //Singleton
+
+    void Awake()
+    {
+        if (current != null && current != this)
+		{
+			//...destroy this and exit. There can only be one Sound Manager
+			Destroy(gameObject);
+			return;
+		}
+
+		//Set this as the current sound manager
+		current = this;
+
+        //Persist this object between scene reloads
+		DontDestroyOnLoad(gameObject);   
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -20,15 +38,13 @@ public class SoundManager : MonoBehaviour
         trapHit = Resources.Load<AudioClip>("trapHit");
 
         audiosrc= GetComponent<AudioSource> ();
-        audiosrc.volume=0.5f;
-    
+        audiosrc.volume = 0.5f; 
     }
 
-    // Update is called once per frame
-    void Update()
+    public static void SetVolume(float volume)
     {
-        
-    }
+        audiosrc.volume = volume;
+    } 
 
     public static void PlaySound(string clip){
         switch(clip){
