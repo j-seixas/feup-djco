@@ -47,6 +47,11 @@ public class PlayerMovement : MonoBehaviour
 	public int direction = 1;				//Direction player is facing
 	public Vector2 ropeHook;
 
+	int ct=0;
+
+	float lastVelocity = 0;
+
+
 	Vector2 colliderStandSize;				//Size of the standing collider
 	Vector2 colliderStandOffset;			//Offset of the standing collider
 	Vector2 colliderCrouchSize;				//Size of the crouching collider
@@ -145,6 +150,19 @@ public class PlayerMovement : MonoBehaviour
 
 		//Calculate the desired velocity based on inputs
 		float xVelocity = speed * input.horizontal;
+		//loop for step sound
+		if (xVelocity != 0 && isOnGround){
+			if(ct == 0){
+				SoundManager.PlaySound("step");
+				ct++;
+			}
+			else if(ct == 10){
+				ct = 0;
+			}
+			else{
+				ct++;
+			}
+		}
 
 		//If the sign of the velocity and direction don't match, flip the character
 		if (xVelocity * direction < 0f || shooting.shouldFlip)
@@ -192,8 +210,7 @@ public class PlayerMovement : MonoBehaviour
 			rigidBody.AddForce(new Vector2(0f, jumpForce), ForceMode2D.Impulse);
 			myAnimator.SetFloat("yvelocity",rigidBody.velocity.y);
 
-			//...and tell the Audio Manager to play the jump audio
-			//AudioManager.PlayJumpAudio();
+			SoundManager.PlaySound("jump");
 		}
 		//Otherwise, if currently within the jump time window...
 		else if (isJumping)
@@ -204,10 +221,18 @@ public class PlayerMovement : MonoBehaviour
 			}
 		}
 
+		//landing noise
+		if(lastVelocity < -0.1 && rigidBody.velocity.y == 0){
+			SoundManager.PlaySound("land");
+			lastVelocity = 0;
+		}else{
+			lastVelocity = rigidBody.velocity.y;
+		}
+
 		//If player is falling to fast, reduce the Y velocity to the max
 		if (rigidBody.velocity.y < maxFallSpeed)
 			rigidBody.velocity = new Vector2(rigidBody.velocity.x, maxFallSpeed);
-			myAnimator.SetFloat("yvelocity",rigidBody.velocity.y);
+			myAnimator.SetFloat("yvelocity",rigidBody.velocity.y);	
 	}
 
 	void SwingMovement()

@@ -52,7 +52,9 @@ public class FallingPlatform : MonoBehaviour
     void OnCollisionEnter2D(Collision2D collision) 
     {
         //When a platform is hit, it has finished falling
-        if(platformsLayer == collision.gameObject.layer) 
+        if(platformsLayer == collision.gameObject.layer){
             hasFinishedFalling = true;
+            SoundManager.PlaySound("traps_hit");
+        }
     }
 }
