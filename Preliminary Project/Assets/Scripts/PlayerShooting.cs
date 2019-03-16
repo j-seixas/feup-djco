@@ -20,6 +20,8 @@ public class PlayerShooting : MonoBehaviour
 
 	[HideInInspector] public bool shouldFlip;
 
+    int numberOfPens = 0;                       
+
 	void Start ()
 	{
 		//Get a reference to the required components
@@ -39,7 +41,8 @@ public class PlayerShooting : MonoBehaviour
 	{
 		shouldFlip = false;
 
-		if ((input.shootPressed || input.shootHeld) && Time.time > nextFire) {
+		if ((input.shootPressed || input.shootHeld) && Time.time > nextFire && numberOfPens > 0) {
+            numberOfPens--;
             nextFire = Time.time + fireRate;
 			myAnimator.SetBool("shooting",true);
 
@@ -78,5 +81,10 @@ public class PlayerShooting : MonoBehaviour
 			bullet.SetProperties(playerDirection, bulletOffset, bulletDirection,this.gameObject);
 			//Debug.Log("Shot");
 		}
+    }
+
+    public void GivePens(int pens)
+    {
+        numberOfPens += pens;
     }
 }
