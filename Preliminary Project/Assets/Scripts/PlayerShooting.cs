@@ -45,6 +45,7 @@ public class PlayerShooting : MonoBehaviour
             numberOfPens--;
             nextFire = Time.time + fireRate;
 			myAnimator.SetBool("shooting",true);
+			SoundManager.PlaySound("player_shot");
 
 			//Calculate shooting direction
 			Vector3 mousePosition = input.mousePosition;
