@@ -4842,7 +4842,7 @@ MonoBehaviour:
   groundDistance: 0.2
   groundLayer:
     serializedVersion: 2
-    m_Bits: 2304
+    m_Bits: 10496
   isOnMovingPlatform: 0
   isOnGround: 0
   isJumping: 0
