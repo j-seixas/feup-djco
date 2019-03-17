@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 8901344558626128496}
   - component: {fileID: 8901344558626128497}
   m_Layer: 0
-  m_Name: Enemy1
+  m_Name: Enemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -143,8 +143,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   fireRate: 0.25
   maxDistance: 20
-  bulletsPerRound: 12
+  bulletsPerRound: 4
   reloadTime: 3
+  accuracy: 1.5
   projectile: {fileID: 574150401529755062, guid: ca52e2088dd9924788199d64d9261a18,
     type: 3}
   bulletOffset: {x: 0.7, y: 0.7}
