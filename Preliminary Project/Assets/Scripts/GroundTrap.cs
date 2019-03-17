@@ -16,7 +16,6 @@ public class GroundTrap : MonoBehaviour
 
     void Update()
     {
-
         //If player collided with it
         if (toDestroy) {
 
