@@ -5,7 +5,7 @@ using UnityEngine;
 public class SoundManager : MonoBehaviour
 {
 
-    public static AudioClip stepSound,jumpSound,landSound,playershot,shots,hitSound,trapHit;
+    public static AudioClip stepSound,jumpSound,landSound,playershot,shots,hitSound,trapHit,usbCollect;
     public static AudioSource audiosrc;
 
     static SoundManager current;            //Singleton
@@ -36,6 +36,7 @@ public class SoundManager : MonoBehaviour
         shots = Resources.Load<AudioClip>("shots");
         hitSound = Resources.Load<AudioClip>("Hit");
         trapHit = Resources.Load<AudioClip>("trapHit");
+        usbCollect = Resources.Load<AudioClip>("usb_collect");
 
         audiosrc= GetComponent<AudioSource> ();
         audiosrc.volume = 0.5f; 
@@ -68,6 +69,9 @@ public class SoundManager : MonoBehaviour
                 break;
             case "traps_hit":
                 audiosrc.PlayOneShot(trapHit);
+                break;
+            case "usb_collect":
+                audiosrc.PlayOneShot(usbCollect);
                 break;
         }
     }
