@@ -14,10 +14,13 @@ public class GameManager : MonoBehaviour
 	//scripts access this one through its public static methods
 	static GameManager current;
 
+    public PlayerShooting player;
 	public float deathSequenceDuration = 1f;	//How long player death takes before restarting
 	private int numberScenes;					//Number of scenes in the game
 
 	bool isGameOver;							//Is the game currently over?
+    public int playerPens = 0;
+
 
 	void Awake()
 	{
@@ -39,6 +42,8 @@ public class GameManager : MonoBehaviour
 	void Start()
 	{
 		numberScenes = SceneManager.sceneCountInBuildSettings;
+        player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerShooting>();
+        playerPens = 0;
 	}
 
 	void Update()
@@ -84,9 +89,22 @@ public class GameManager : MonoBehaviour
 		SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex); 
 	}
 
+    void SavePens()
+    {
+        playerPens = player.GetPens();
+    }
+
+    public int GivePens()
+    {
+        player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerShooting>();
+        
+        return playerPens;
+    }
+
 	public static void PlayerReachedNextLevel()
 	{
-		int index = SceneManager.GetActiveScene().buildIndex + 1;
+        current.Invoke("SavePens", 0);
+        int index = SceneManager.GetActiveScene().buildIndex + 1;
 
 		//Check if there are more levels
 		if(index >= current.numberScenes) {
