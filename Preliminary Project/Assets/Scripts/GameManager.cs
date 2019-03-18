@@ -90,6 +90,7 @@ public class GameManager : MonoBehaviour
 		HUD.SetEnable(false);
 		playerHP = PlayerHealth.initialHealth;
 		playerPens = 0;
+		UserInterface.OnGameOver();
 	}
 
 	void RestartScene()
