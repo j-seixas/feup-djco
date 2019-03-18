@@ -18,10 +18,10 @@ public class PlayerHealth : MonoBehaviour
 		enemyBulletsLayer = LayerMask.NameToLayer("EnemyBullets");
 		GameManager.SetPlayerHealth(this);
 		health = GameManager.GiveHP();
+		HUD.SetPlayerHealth(this);
 	} 
 
 	void Update() {
-		Debug.Log(health);
 		//No health left, the player is dead
 		if(health <= 0) {
 			isAlive = false;

@@ -80,8 +80,16 @@ public class GameManager : MonoBehaviour
 		if (current == null)
 			return;
 
+		//Debug.Log("Won");
+
 		//The game is now over
 		current.isGameOver = true;
+
+		//Go to menu
+		SceneManager.LoadScene(0); 
+		HUD.SetEnable(false);
+		playerHP = PlayerHealth.initialHealth;
+		playerPens = 0;
 	}
 
 	void RestartScene()
@@ -129,11 +137,11 @@ public class GameManager : MonoBehaviour
 		//Check if there are more levels
 		if(index >= current.numberScenes) {
 			GameManager.PlayerWon();
-			Debug.Log("Won");
 			return;
 		}
 
 		//Loads the next scene
     	SceneManager.LoadScene(index);
+		HUD.SetEnable(true);
 	}  
 }
