@@ -14,12 +14,14 @@ public class GameManager : MonoBehaviour
 	//scripts access this one through its public static methods
 	static GameManager current;
 
-    public PlayerShooting player;
+    static public PlayerShooting playerShooting;
+	static public PlayerHealth playerHealth;
 	public float deathSequenceDuration = 1f;	//How long player death takes before restarting
 	private int numberScenes;					//Number of scenes in the game
 
 	bool isGameOver;							//Is the game currently over?
-    public int playerPens = 0;
+    static private int playerPens = 0;
+	static private int playerHP = PlayerHealth.initialHealth;
 
 
 	void Awake()
@@ -42,9 +44,6 @@ public class GameManager : MonoBehaviour
 	void Start()
 	{
 		numberScenes = SceneManager.sceneCountInBuildSettings;
-        GameObject playerGameobject = GameObject.FindGameObjectWithTag("Player");
-		if(playerGameobject)
-			player = playerGameobject.GetComponent<PlayerShooting>();
         playerPens = 0;
 	}
 
@@ -91,21 +90,40 @@ public class GameManager : MonoBehaviour
 		SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex); 
 	}
 
-    void SavePens()
+	public static void SetPlayerShooting(PlayerShooting ps)
+	{
+		playerShooting = ps;
+	}
+
+	public static void SetPlayerHealth(PlayerHealth ph)
+	{
+		playerHealth = ph;
+	}
+
+    public static void SavePens()
     {
-        playerPens = player.GetPens();
+        playerPens = playerShooting.GetPens();
     }
 
-    public int GivePens()
-    {
-        player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerShooting>();
-        
+    public static int GivePens()
+    {        
         return playerPens;
+    }
+
+	public static void SaveHP()
+    {
+        playerHP = playerHealth.GetHP();
+    }
+
+    public static int GiveHP()
+    {        
+        return playerHP;
     }
 
 	public static void PlayerReachedNextLevel()
 	{
-        current.Invoke("SavePens", 0);
+        SavePens();
+		SaveHP();
         int index = SceneManager.GetActiveScene().buildIndex + 1;
 
 		//Check if there are more levels

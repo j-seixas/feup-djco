@@ -32,7 +32,8 @@ public class PlayerShooting : MonoBehaviour
 		playerCollider = GetComponent<Collider2D>();
 		myAnimator = GetComponent<Animator>();
 		penLayer = LayerMask.NameToLayer("PlayerPens");
-        numberOfPens = FindObjectOfType<GameManager>().GivePens();
+        GameManager.SetPlayerShooting(this);
+		numberOfPens = GameManager.GivePens();
 	}
 
 	void FixedUpdate()
@@ -46,7 +47,7 @@ public class PlayerShooting : MonoBehaviour
 		shouldFlip = false;
 
 		if ((input.shootPressed || input.shootHeld) && Time.time > nextFire && numberOfPens > 0) {
-            Debug.Log(numberOfPens);
+            //Debug.Log(numberOfPens);
             numberOfPens--;
             nextFire = Time.time + fireRate;
 			myAnimator.SetBool("shooting",true);
