@@ -34,6 +34,7 @@ public class PlayerShooting : MonoBehaviour
 		penLayer = LayerMask.NameToLayer("PlayerPens");
         GameManager.SetPlayerShooting(this);
 		numberOfPens = GameManager.GivePens();
+		HUD.SetPlayerShooting(this);
 	}
 
 	void FixedUpdate()
