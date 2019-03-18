@@ -7,7 +7,10 @@ public class EnemyShooting : MonoBehaviour
     public float maxDistance = 20f;         //Maximum shooting distance
     public int bulletsPerRound = 4;        //Bullets per round
     public float reloadTime = 3f;           //Reload time
-	public float accuracy = 1.5f;				//Enemy shooting accuracy
+	public float accuracy = 1.5f;			//Enemy shooting accuracy
+
+	[Header("Health")]
+	public int health = 1;					//Enemy health
 
     private bool reloading;                 //Is the enemy reloading?
     private int bulletCounter;              //Bullet counter for rounds
@@ -25,7 +28,7 @@ public class EnemyShooting : MonoBehaviour
     private SpriteRenderer sprite;
 
 	private BoxCollider2D playerCollider;
-
+	private int penLayer;
 
     private int direction;
 
@@ -35,6 +38,7 @@ public class EnemyShooting : MonoBehaviour
 		enemyCollider = GetComponent<Collider2D>();
         sprite = GetComponent<SpriteRenderer>();
 		playerCollider = player.GetComponent<BoxCollider2D>();
+		penLayer = LayerMask.NameToLayer("PlayerPens");
         bulletCounter = 0;
         reloadCounter = 0f;
         direction = 1;
@@ -113,4 +117,15 @@ public class EnemyShooting : MonoBehaviour
             }
 		}
     }
+
+	void OnCollisionEnter2D(Collision2D collision)
+	{
+		if(collision.gameObject.layer == penLayer) {
+			health--;
+		}
+
+		if(health <= 0) {
+			Destroy(gameObject);
+		}
+	}
 }

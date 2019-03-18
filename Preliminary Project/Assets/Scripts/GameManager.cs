@@ -42,7 +42,9 @@ public class GameManager : MonoBehaviour
 	void Start()
 	{
 		numberScenes = SceneManager.sceneCountInBuildSettings;
-        player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerShooting>();
+        GameObject playerGameobject = GameObject.FindGameObjectWithTag("Player");
+		if(playerGameobject)
+			player = playerGameobject.GetComponent<PlayerShooting>();
         playerPens = 0;
 	}
 
