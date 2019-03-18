@@ -90,7 +90,7 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8901344558626128500}
-  m_BodyType: 0
+  m_BodyType: 2
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
@@ -146,6 +146,7 @@ MonoBehaviour:
   bulletsPerRound: 4
   reloadTime: 3
   accuracy: 1.5
+  health: 1
   projectile: {fileID: 574150401529755062, guid: ca52e2088dd9924788199d64d9261a18,
     type: 3}
   bulletOffset: {x: 0.7, y: 0.7}

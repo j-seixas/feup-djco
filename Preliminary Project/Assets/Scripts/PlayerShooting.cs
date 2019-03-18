@@ -20,7 +20,9 @@ public class PlayerShooting : MonoBehaviour
 
 	[HideInInspector] public bool shouldFlip;
 
-    int numberOfPens = 0;                       
+    int numberOfPens = 0;               
+
+	private int penLayer;        
 
 	void Start ()
 	{
@@ -29,6 +31,10 @@ public class PlayerShooting : MonoBehaviour
         movement = GetComponent<PlayerMovement>();
 		playerCollider = GetComponent<Collider2D>();
 		myAnimator = GetComponent<Animator>();
+		penLayer = LayerMask.NameToLayer("PlayerPens");
+        GameManager.SetPlayerShooting(this);
+		numberOfPens = GameManager.GivePens();
+		HUD.SetPlayerShooting(this);
 	}
 
 	void FixedUpdate()
@@ -42,6 +48,7 @@ public class PlayerShooting : MonoBehaviour
 		shouldFlip = false;
 
 		if ((input.shootPressed || input.shootHeld) && Time.time > nextFire && numberOfPens > 0) {
+            //Debug.Log(numberOfPens);
             numberOfPens--;
             nextFire = Time.time + fireRate;
 			myAnimator.SetBool("shooting",true);
@@ -77,6 +84,7 @@ public class PlayerShooting : MonoBehaviour
 			}
             
 			GameObject clone = Instantiate(projectile, bulletPosition, Quaternion.identity) as GameObject;
+			clone.layer = penLayer;
 			Bullet bullet = clone.GetComponent<Bullet>();
 
 			bullet.SetProperties(playerDirection, bulletOffset, bulletDirection,this.gameObject);
@@ -87,5 +95,15 @@ public class PlayerShooting : MonoBehaviour
     public void GivePens(int pens)
     {
         numberOfPens += pens;
+    }
+
+    public void SetPens(int pens)
+    {
+        numberOfPens = pens;
+    }
+
+    public int GetPens()
+    {
+        return numberOfPens;
     }
 }

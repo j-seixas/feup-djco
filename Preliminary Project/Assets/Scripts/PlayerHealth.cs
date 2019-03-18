@@ -5,7 +5,8 @@ using UnityEngine;
 
 public class PlayerHealth : MonoBehaviour
 {
-	public int health = 5;
+	static public int initialHealth = 5;
+	public int health = initialHealth;
 	public bool isAlive = true;
 	private int trapLayer;
 	private int enemyBulletsLayer;
@@ -15,6 +16,9 @@ public class PlayerHealth : MonoBehaviour
 	{
 		trapLayer = LayerMask.NameToLayer("Traps");
 		enemyBulletsLayer = LayerMask.NameToLayer("EnemyBullets");
+		GameManager.SetPlayerHealth(this);
+		health = GameManager.GiveHP();
+		HUD.SetPlayerHealth(this);
 	} 
 
 	void Update() {
@@ -26,6 +30,11 @@ public class PlayerHealth : MonoBehaviour
 			//Debug.Log("Player died");
 			GameManager.PlayerDied();
 		}
+	}
+
+	public int GetHP()
+	{
+		return health;
 	}
 
 	void OnCollisionEnter2D(Collision2D collision)

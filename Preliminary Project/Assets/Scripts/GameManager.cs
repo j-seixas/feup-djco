@@ -14,10 +14,15 @@ public class GameManager : MonoBehaviour
 	//scripts access this one through its public static methods
 	static GameManager current;
 
+    static public PlayerShooting playerShooting;
+	static public PlayerHealth playerHealth;
 	public float deathSequenceDuration = 1f;	//How long player death takes before restarting
 	private int numberScenes;					//Number of scenes in the game
 
 	bool isGameOver;							//Is the game currently over?
+    static private int playerPens = 0;
+	static private int playerHP = PlayerHealth.initialHealth;
+
 
 	void Awake()
 	{
@@ -39,6 +44,7 @@ public class GameManager : MonoBehaviour
 	void Start()
 	{
 		numberScenes = SceneManager.sceneCountInBuildSettings;
+        playerPens = 0;
 	}
 
 	void Update()
@@ -74,8 +80,16 @@ public class GameManager : MonoBehaviour
 		if (current == null)
 			return;
 
+		//Debug.Log("Won");
+
 		//The game is now over
 		current.isGameOver = true;
+
+		//Go to menu
+		SceneManager.LoadScene(0); 
+		HUD.SetEnable(false);
+		playerHP = PlayerHealth.initialHealth;
+		playerPens = 0;
 	}
 
 	void RestartScene()
@@ -84,18 +98,50 @@ public class GameManager : MonoBehaviour
 		SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex); 
 	}
 
+	public static void SetPlayerShooting(PlayerShooting ps)
+	{
+		playerShooting = ps;
+	}
+
+	public static void SetPlayerHealth(PlayerHealth ph)
+	{
+		playerHealth = ph;
+	}
+
+    public static void SavePens()
+    {
+        playerPens = playerShooting.GetPens();
+    }
+
+    public static int GivePens()
+    {        
+        return playerPens;
+    }
+
+	public static void SaveHP()
+    {
+        playerHP = playerHealth.GetHP();
+    }
+
+    public static int GiveHP()
+    {        
+        return playerHP;
+    }
+
 	public static void PlayerReachedNextLevel()
 	{
-		int index = SceneManager.GetActiveScene().buildIndex + 1;
+        SavePens();
+		SaveHP();
+        int index = SceneManager.GetActiveScene().buildIndex + 1;
 
 		//Check if there are more levels
 		if(index >= current.numberScenes) {
 			GameManager.PlayerWon();
-			Debug.Log("Won");
 			return;
 		}
 
 		//Loads the next scene
     	SceneManager.LoadScene(index);
+		HUD.SetEnable(true);
 	}  
 }
