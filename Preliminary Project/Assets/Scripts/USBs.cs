@@ -24,6 +24,8 @@ public class USBs : MonoBehaviour
 
         // Gives USBs to Player
         collision.GetComponent<PlayerShooting>().GivePens(numberToGive);
+        SoundManager.PlaySound("usb_collect");
+
 
         // Destroys Object
         Destroy(gameObject);
