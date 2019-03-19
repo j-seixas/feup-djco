@@ -12,9 +12,23 @@ public class HUD : MonoBehaviour
     static private GameObject canvas;
     static private Image background;
 
+    static private HUD current;
+
+    void Awake()
+	{
+		if (current != null && current != this)
+		{
+			Destroy(gameObject);
+			return;
+		}
+
+		current = this;
+
+		DontDestroyOnLoad(gameObject);
+	}
+
     void Start()
     {
-        DontDestroyOnLoad(this);
         canvas = GameObject.Find("Canvas");
         healthBarFill = GameObject.Find("HealthBar/Fill").GetComponent<RectTransform>();
         healtBarBackground = GameObject.Find("HealthBar/Background").GetComponent<RectTransform>();
