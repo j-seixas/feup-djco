@@ -30,7 +30,7 @@ public class HUD : MonoBehaviour
 
     void Start()
     {
-        canvas = GameObject.Find("Canvas");
+        canvas = gameObject;
         healthBarFill = GameObject.Find("HealthBar/Fill").GetComponent<RectTransform>();
         healtBarBackground = GameObject.Find("HealthBar/Background").GetComponent<RectTransform>();
         penNumber = GameObject.Find("Pens/Number").GetComponent<TextMeshProUGUI>();
@@ -57,7 +57,8 @@ public class HUD : MonoBehaviour
 
     static public void SetEnable(bool enable)
     {
-        canvas.SetActive(enable);
+        if(canvas)
+            canvas.SetActive(enable);
     }
 
     public void Resume()
