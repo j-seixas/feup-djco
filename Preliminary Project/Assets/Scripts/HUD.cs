@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 using TMPro;
 
 public class HUD : MonoBehaviour
@@ -9,14 +10,30 @@ public class HUD : MonoBehaviour
     static public RectTransform healthBarFill;
     static public TextMeshProUGUI penNumber;
     static private GameObject canvas;
+    static private Image background;
+
+    static private HUD current;
+
+    void Awake()
+	{
+		if (current != null && current != this)
+		{
+			Destroy(gameObject);
+			return;
+		}
+
+		current = this;
+
+		DontDestroyOnLoad(gameObject);
+	}
 
     void Start()
     {
-        DontDestroyOnLoad(this);
         canvas = GameObject.Find("Canvas");
         healthBarFill = GameObject.Find("HealthBar/Fill").GetComponent<RectTransform>();
         healtBarBackground = GameObject.Find("HealthBar/Background").GetComponent<RectTransform>();
         penNumber = GameObject.Find("Pens/Number").GetComponent<TextMeshProUGUI>();
+        background = canvas.GetComponent<Image>();
     }
 
     void Update()
@@ -40,5 +57,28 @@ public class HUD : MonoBehaviour
     static public void SetEnable(bool enable)
     {
         canvas.SetActive(enable);
+    }
+
+    public void Resume()
+    {
+        Time.timeScale = 1f;
+        background.color = new Vector4(background.color.r, background.color.g, background.color.b, 0f);
+    }
+    
+    public void Pause()
+    {
+        Time.timeScale = 0f;
+        background.color = new Vector4(background.color.r, background.color.g, background.color.b, 0.4f);
+    }
+    
+    public void Quit()
+    {
+        Application.Quit();
+    }
+
+    public void ReturnToMenu()
+    {
+        Resume();
+        GameManager.ReturnToMenu();
     }
 }

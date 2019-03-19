@@ -19,7 +19,7 @@ public class GameManager : MonoBehaviour
 	public float deathSequenceDuration = 1f;	//How long player death takes before restarting
 	private int numberScenes;					//Number of scenes in the game
 
-	bool isGameOver;							//Is the game currently over?
+	static bool isGameOver;							//Is the game currently over?
     static private int playerPens = 0;
 	static private int playerHP = PlayerHealth.initialHealth;
 
@@ -45,6 +45,7 @@ public class GameManager : MonoBehaviour
 	{
 		numberScenes = SceneManager.sceneCountInBuildSettings;
         playerPens = 0;
+		isGameOver = false;
 	}
 
 	void Update()
@@ -61,7 +62,7 @@ public class GameManager : MonoBehaviour
 			return false;
 
 		//Return the state of the game
-		return current.isGameOver;
+		return isGameOver;
 	}
 
 	public static void PlayerDied()
@@ -83,13 +84,10 @@ public class GameManager : MonoBehaviour
 		//Debug.Log("Won");
 
 		//The game is now over
-		current.isGameOver = true;
+		isGameOver = true;
 
 		//Go to menu
-		SceneManager.LoadScene(0); 
-		HUD.SetEnable(false);
-		playerHP = PlayerHealth.initialHealth;
-		playerPens = 0;
+		ReturnToMenu();
 		UserInterface.OnGameOver();
 	}
 
@@ -142,7 +140,16 @@ public class GameManager : MonoBehaviour
 		}
 
 		//Loads the next scene
+		isGameOver = false;
     	SceneManager.LoadScene(index);
 		HUD.SetEnable(true);
 	}  
+
+	public static void ReturnToMenu()
+	{
+		SceneManager.LoadScene(0); 
+		HUD.SetEnable(false);
+		playerHP = PlayerHealth.initialHealth;
+		playerPens = 0;
+	}
 }

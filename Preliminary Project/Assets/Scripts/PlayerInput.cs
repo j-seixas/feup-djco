@@ -3,6 +3,9 @@
 // from Update() in sync with FixedUpdate()
 
 using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.EventSystems;
+using System.Collections.Generic;
 
 //We first ensure this script runs before all other player scripts to prevent laggy
 //inputs
@@ -18,9 +21,18 @@ public class PlayerInput : MonoBehaviour
 	[HideInInspector] public bool shootPressed;		//Bool that stores shoot input
 	[HideInInspector] public bool shootHeld;		//Bool that stores shoot held
 	[HideInInspector] public Vector3 mousePosition;	//Vector that store mouse position
+	GraphicRaycaster m_Raycaster;
+    PointerEventData m_PointerEventData;
+    EventSystem m_EventSystem;
 
 	bool readyToClear;								//Bool used to keep input in sync
 
+	void Start()
+	{
+		GameObject canvas = GameObject.Find("Canvas");
+		m_Raycaster = canvas.GetComponent<GraphicRaycaster>();
+		m_EventSystem = canvas.GetComponent<EventSystem>();
+	}
 
 	void Update()
 	{
@@ -82,5 +94,25 @@ public class PlayerInput : MonoBehaviour
 
 		//Mouse inputs
 		mousePosition   = Input.mousePosition;
+
+		CheckUI();	
+	}
+
+	void CheckUI()
+	{
+		m_PointerEventData = new PointerEventData(m_EventSystem);
+		m_PointerEventData.position = Input.mousePosition;
+
+		List<RaycastResult> results = new List<RaycastResult>();
+
+		m_Raycaster.Raycast(m_PointerEventData, results);
+
+		foreach (RaycastResult result in results)
+		{
+			if(result.gameObject.name != "Canvas") {
+				shootPressed = false;
+				shootHeld = false;
+			}
+		}
 	}
 }
