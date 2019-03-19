@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
+[DefaultExecutionOrder(-200)]
 public class HUD : MonoBehaviour
 {
     static private PlayerHealth playerHealth;
@@ -9,7 +10,7 @@ public class HUD : MonoBehaviour
     static private RectTransform healtBarBackground;
     static public RectTransform healthBarFill;
     static public TextMeshProUGUI penNumber;
-    static private GameObject canvas;
+    static public GameObject canvas;
     static private Image background;
 
     static private HUD current;

@@ -49174,12 +49174,12 @@ PrefabInstance:
     - target: {fileID: 4889828975589693950, guid: 667b895f86939dbd9b98c7a6eed53558,
         type: 3}
       propertyPath: m_havePropertiesChanged
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4889828975589693950, guid: 667b895f86939dbd9b98c7a6eed53558,
         type: 3}
       propertyPath: m_isInputParsingRequired
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 667b895f86939dbd9b98c7a6eed53558, type: 3}

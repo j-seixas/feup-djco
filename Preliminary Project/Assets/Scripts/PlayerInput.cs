@@ -29,7 +29,7 @@ public class PlayerInput : MonoBehaviour
 
 	void Start()
 	{
-		GameObject canvas = GameObject.Find("Canvas");
+		GameObject canvas = HUD.canvas;
 		m_Raycaster = canvas.GetComponent<GraphicRaycaster>();
 		m_EventSystem = canvas.GetComponent<EventSystem>();
 	}

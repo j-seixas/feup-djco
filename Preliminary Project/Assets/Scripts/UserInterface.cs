@@ -20,6 +20,7 @@ public class UserInterface : MonoBehaviour
 	public void PlayGame()
 	{
 		SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+		HUD.SetEnable(true);
 	}
 
 	public void QuitGame()
