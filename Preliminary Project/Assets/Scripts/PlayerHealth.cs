@@ -11,6 +11,7 @@ public class PlayerHealth : MonoBehaviour
 	private int trapLayer;
 	private int enemyBulletsLayer;
 	public BoxCollider2D worldCollider;
+	public BoxCollider2D groundCollider;
 
 	void Start()
 	{
@@ -60,6 +61,8 @@ public class PlayerHealth : MonoBehaviour
 
 		//Player exceeded world bounds
 		if(worldCollider == collider)
+			health = -1;
+		else if(groundCollider == collider)
 			health = -1;
 	}
 }
