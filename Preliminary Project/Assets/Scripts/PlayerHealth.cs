@@ -38,6 +38,17 @@ public class PlayerHealth : MonoBehaviour
 		return health;
 	}
 
+    public void GiveHealth(int hp)
+    {
+        Debug.Log(health);
+        Debug.Log("+Health " + hp);
+        if (health + hp > initialHealth)
+            health = initialHealth;
+        else
+            health += hp;
+        Debug.Log(health);
+    }
+
 	void OnCollisionEnter2D(Collision2D collision)
 	{
 		if(!isAlive)
