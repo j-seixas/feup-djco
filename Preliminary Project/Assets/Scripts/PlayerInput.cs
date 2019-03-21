@@ -1,14 +1,12 @@
-﻿// This script handles inputs for the player. It serves two main purposes: 1) wrap up
-// inputs so swapping between mobile and standalone is simpler and 2) keeping inputs
-// from Update() in sync with FixedUpdate()
+﻿// This script handles inputs for the player. 
+// It keeping inputs from Update() in sync with FixedUpdate()
 
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using System.Collections.Generic;
 
-//We first ensure this script runs before all other player scripts to prevent laggy
-//inputs
+//Ensure this script runs before all other scripts to prevent laggy inputs
 [DefaultExecutionOrder(-100)]
 public class PlayerInput : MonoBehaviour
 {
@@ -21,6 +19,8 @@ public class PlayerInput : MonoBehaviour
 	[HideInInspector] public bool shootPressed;		//Bool that stores shoot input
 	[HideInInspector] public bool shootHeld;		//Bool that stores shoot held
 	[HideInInspector] public Vector3 mousePosition;	//Vector that store mouse position
+
+	//UI Checks
 	GraphicRaycaster m_Raycaster;
     PointerEventData m_PointerEventData;
     EventSystem m_EventSystem;

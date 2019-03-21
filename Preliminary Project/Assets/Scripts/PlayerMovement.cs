@@ -8,7 +8,6 @@ public class PlayerMovement : MonoBehaviour
 
 	[Header("Movement Properties")]
 	public float speed = 8f;				//Player speed
-	public float crouchSpeedDivisor = 3f;	//Speed reduction when crouching
 	public float coyoteDuration = .05f;		//How long the player can jump after falling
 	public float maxFallSpeed = -25f;		//Max speed player can fall
 
@@ -21,7 +20,6 @@ public class PlayerMovement : MonoBehaviour
 
 	[Header("Environment Check Properties")]
 	public float footOffset = .4f;			//X Offset of feet raycast
-	public float headClearance = .5f;		//Space needed above the player's head
 	public float groundDistance = .2f;		//Distance player is considered to be on the ground
 	public LayerMask groundLayer;			//Layer of the ground
 
@@ -29,8 +27,6 @@ public class PlayerMovement : MonoBehaviour
 	public bool isOnMovingPlatform;
 	public bool isOnGround;					//Is the player on the ground?
 	public bool isJumping;					//Is player jumping?
-	public bool isCrouching;				//Is player crouching?
-	public bool isHeadBlocked;				//Is the player's head blocked?
 
 	PlayerInput input;						//The current inputs for the player
 	BoxCollider2D bodyCollider;				//The collider component
@@ -51,12 +47,6 @@ public class PlayerMovement : MonoBehaviour
 
 	float lastVelocity = 0;
 
-
-	Vector2 colliderStandSize;				//Size of the standing collider
-	Vector2 colliderStandOffset;			//Offset of the standing collider
-	Vector2 colliderCrouchSize;				//Size of the crouching collider
-	Vector2 colliderCrouchOffset;			//Offset of the crouching collider
-
 	private Rigidbody2D movingPlatform;
 
 
@@ -73,14 +63,6 @@ public class PlayerMovement : MonoBehaviour
 
 		//Record the original x scale of the player
 		originalXScale = transform.localScale.x;
-
-		//Record initial collider size and offset
-		colliderStandSize = bodyCollider.size;
-		colliderStandOffset = bodyCollider.offset;
-
-		//Calculate crouching collider size and offset
-		colliderCrouchSize = new Vector2(bodyCollider.size.x, bodyCollider.size.y / 2f);
-		colliderCrouchOffset = new Vector2(bodyCollider.offset.x, bodyCollider.offset.y / 2f);
 	}
 
 	void FixedUpdate()
@@ -98,7 +80,6 @@ public class PlayerMovement : MonoBehaviour
 	{
 		//Start by assuming the player isn't on the ground and the head isn't blocked
 		isOnGround = false;
-		isHeadBlocked = false;
 		isOnMovingPlatform = false;
 
 		//Cast rays for the left and right foot
@@ -119,30 +100,10 @@ public class PlayerMovement : MonoBehaviour
 				isOnMovingPlatform = true;
 			}
 		}
-
-		//Cast the ray to check above the player's head
-		RaycastHit2D headCheck = Raycast(new Vector2(0f, bodyCollider.size.y * transform.localScale.y), Vector2.up, headClearance);
-
-		//If that ray hits, the player's head is blocked
-		if (headCheck)
-			isHeadBlocked = true;
-
-		//Determine the direction of the wall grab attempt
-		Vector2 grabDir = new Vector2(direction, 0f);
 	}
 
 	void GroundMovement()
 	{
-		//Handle crouching input. If holding the crouch button but not crouching, crouch
-		if (input.crouchHeld && !isCrouching && isOnGround)
-			Crouch();
-		//Otherwise, if not holding crouch but currently crouching, stand up
-		else if (!input.crouchHeld && isCrouching)
-			StandUp();
-		//Otherwise, if crouching and no longer on the ground, stand up
-		else if (!isOnGround && isCrouching)
-			StandUp();
-
 		if(rope.isSwinging){
 			myAnimator.SetBool("swinging",true);
 			return;
@@ -168,10 +129,6 @@ public class PlayerMovement : MonoBehaviour
 		if (xVelocity * direction < 0f || shooting.shouldFlip)
 			FlipCharacterDirection();
 
-		//If the player is crouching, reduce the velocity
-		if (isCrouching)
-			xVelocity /= crouchSpeedDivisor;
-
 		//Apply the desired velocity 
 		rigidBody.velocity = new Vector2(xVelocity, rigidBody.velocity.y);
 		if(isOnMovingPlatform)
@@ -191,14 +148,7 @@ public class PlayerMovement : MonoBehaviour
 		//the player is on the ground or within the coyote time window...
 		if (input.jumpPressed && !isJumping && (isOnGround || coyoteTime > Time.time))
 		{
-			//...check to see if crouching AND not blocked. If so...
-			if (isCrouching && !isHeadBlocked)
-			{
-				//...stand up and apply a crouching jump boost
-				StandUp();
-			}
-
-			//...The player is no longer on the groud and is jumping...
+			//...The player is no longer on the ground and is jumping...
 			isOnGround = false;
 			isJumping = true;
 			myAnimator.SetBool("grounded",isOnGround);
@@ -257,13 +207,13 @@ public class PlayerMovement : MonoBehaviour
 			{
 				perpendicularDirection = new Vector2(-playerToHookDirection.y, playerToHookDirection.x);
 				Vector2 leftPerpPos = (Vector2)transform.position - perpendicularDirection * -2f;
-				Debug.DrawLine(transform.position, leftPerpPos, Color.green, 0f);
+				//Debug.DrawLine(transform.position, leftPerpPos, Color.green, 0f);
 			}
 			else
 			{
 				perpendicularDirection = new Vector2(playerToHookDirection.y, -playerToHookDirection.x);
 				Vector2 rightPerpPos = (Vector2)transform.position + perpendicularDirection * 2f;
-				Debug.DrawLine(transform.position, rightPerpPos, Color.green, 0f);
+				//Debug.DrawLine(transform.position, rightPerpPos, Color.green, 0f);
 			}
 
 			Vector2 force = perpendicularDirection * swingForce;
@@ -280,31 +230,7 @@ public class PlayerMovement : MonoBehaviour
 		sprite.flipX = !sprite.flipX;
 	}
 
-	void Crouch()
-	{
-		//The player is crouching
-		isCrouching = true;
-
-		//Apply the crouching collider size and offset
-		bodyCollider.size = colliderCrouchSize;
-		bodyCollider.offset = colliderCrouchOffset;
-	}
-
-	void StandUp()
-	{
-		//If the player's head is blocked, they can't stand so exit
-		if (isHeadBlocked)
-			return;
-
-		//The player isn't crouching
-		isCrouching = false;
 	
-		//Apply the standing collider size and offset
-		bodyCollider.size = colliderStandSize;
-		bodyCollider.offset = colliderStandOffset;
-	}
-
-
 	//These two Raycast methods wrap the Physics2D.Raycast() and provide some extra
 	//functionality
 	RaycastHit2D Raycast(Vector2 offset, Vector2 rayDirection, float length)

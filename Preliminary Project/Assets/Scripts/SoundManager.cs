@@ -5,7 +5,7 @@ using UnityEngine;
 public class SoundManager : MonoBehaviour
 {
 
-    public static AudioClip stepSound,jumpSound,landSound,playershot,shots,hitSound,trapHit,usbCollect;
+    private static Dictionary<string, AudioClip> audioClips;
     public static AudioSource audiosrc;
 
     static SoundManager current;            //Singleton
@@ -29,14 +29,15 @@ public class SoundManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        stepSound = Resources.Load<AudioClip>("step");
-        jumpSound = Resources.Load<AudioClip>("jump");
-        landSound = Resources.Load<AudioClip>("landing"); //not done
-        playershot = Resources.Load<AudioClip>("player_shot");
-        shots = Resources.Load<AudioClip>("shots");
-        hitSound = Resources.Load<AudioClip>("Hit");
-        trapHit = Resources.Load<AudioClip>("trapHit");
-        usbCollect = Resources.Load<AudioClip>("usb_collect");
+        audioClips = new Dictionary<string, AudioClip>();    
+        audioClips.Add("step", Resources.Load<AudioClip>("step"));
+        audioClips.Add("jump", Resources.Load<AudioClip>("jump"));
+        audioClips.Add("land", Resources.Load<AudioClip>("landing"));
+        audioClips.Add("player_shot", Resources.Load<AudioClip>("player_shot"));
+        audioClips.Add("shots", Resources.Load<AudioClip>("shots"));
+        audioClips.Add("hit", Resources.Load<AudioClip>("Hit"));
+        audioClips.Add("traps_hit", Resources.Load<AudioClip>("trapHit"));
+        audioClips.Add("usb_collect", Resources.Load<AudioClip>("usb_collect"));
 
         audiosrc= GetComponent<AudioSource> ();
         audiosrc.volume = 0.5f; 
@@ -48,31 +49,8 @@ public class SoundManager : MonoBehaviour
     } 
 
     public static void PlaySound(string clip){
-        switch(clip){
-            case "step":
-                audiosrc.PlayOneShot(stepSound);
-                break;
-            case "jump":
-                audiosrc.PlayOneShot(jumpSound);
-                break;
-            case "land":
-                audiosrc.PlayOneShot(landSound);
-                break;
-            case "player_shot":
-                audiosrc.PlayOneShot(playershot);
-                break;
-            case "shots":
-                audiosrc.PlayOneShot(shots);
-                break;
-            case "hit":
-                audiosrc.PlayOneShot(hitSound);
-                break;
-            case "traps_hit":
-                audiosrc.PlayOneShot(trapHit);
-                break;
-            case "usb_collect":
-                audiosrc.PlayOneShot(usbCollect);
-                break;
+        if (audioClips.TryGetValue(clip, out AudioClip audioClip)) {
+            audiosrc.PlayOneShot(audioClip);
         }
     }
 }

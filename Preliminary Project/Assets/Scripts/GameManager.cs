@@ -1,6 +1,6 @@
 ﻿// This script is a Manager that controls the the flow and control of the game. It keeps
-// track of player data (orb count, death count, total game time) and interfaces with
-// the UI Manager. All game commands are issued through the static methods of this class
+// track of player data and interfaces with the UI Manager.
+// All game commands are issued through the static methods of this class
 
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -9,9 +9,7 @@ using System.Collections.Generic;
 
 public class GameManager : MonoBehaviour
 {
-	//This class holds a static reference to itself to ensure that there will only be
-	//one in existence. This is often referred to as a "singleton" design pattern. Other
-	//scripts access this one through its public static methods
+	//Singleton
 	static GameManager current;
 
     static public PlayerShooting playerShooting;
@@ -19,7 +17,7 @@ public class GameManager : MonoBehaviour
 	public float deathSequenceDuration = 1f;	//How long player death takes before restarting
 	private int numberScenes;					//Number of scenes in the game
 
-	static bool isGameOver;							//Is the game currently over?
+	static bool isGameOver;						//Is the game currently over?
     static private int playerPens = 0;
 	static private int playerHP = PlayerHealth.initialHealth;
 

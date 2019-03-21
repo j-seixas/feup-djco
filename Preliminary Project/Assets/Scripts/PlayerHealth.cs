@@ -1,7 +1,4 @@
-﻿// This script handles detecting collisions with traps and telling the Game Manager
-// when the player dies
-
-using UnityEngine;
+﻿using UnityEngine;
 
 public class PlayerHealth : MonoBehaviour
 {
@@ -40,13 +37,13 @@ public class PlayerHealth : MonoBehaviour
 
     public void GiveHealth(int hp)
     {
-        Debug.Log(health);
-        Debug.Log("+Health " + hp);
+        //Debug.Log(health);
+        //Debug.Log("+Health " + hp);
         if (health + hp > initialHealth)
             health = initialHealth;
         else
             health += hp;
-        Debug.Log(health);
+        //Debug.Log(health);
     }
 
 	void OnCollisionEnter2D(Collision2D collision)
