@@ -50940,7 +50940,7 @@ MonoBehaviour:
   m_BoundingVolume: {fileID: 0}
   m_BoundingShape2D: {fileID: 1822514957}
   m_ConfineScreenEdges: 1
-  m_Damping: 0.7
+  m_Damping: 0.2
 --- !u!1001 &1725199954
 PrefabInstance:
   m_ObjectHideFlags: 0
