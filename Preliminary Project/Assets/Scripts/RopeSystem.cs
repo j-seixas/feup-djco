@@ -22,6 +22,7 @@ public class RopeSystem : MonoBehaviour
     private float ropeMaxCastDistance = 20f;
     private List<Vector2> ropePositions = new List<Vector2>();
     private bool distanceSet;
+    public float minDistance = 0.5f;
 
     public float ropeOffset = 1f;
     public float climbSpeed = 3f;
@@ -97,15 +98,17 @@ public class RopeSystem : MonoBehaviour
             ropeRenderer.enabled = true;
 
             RaycastHit2D hit = Physics2D.Raycast(playerPosition, aimDirection, ropeMaxCastDistance, ropeLayerMask);
+
+            float distance = Vector2.Distance(playerPosition, hit.point);
             
-            if (hit.collider != null && !hit.collider.isTrigger)
+            if (hit.collider != null && !hit.collider.isTrigger && distance > minDistance)
             {
                 isSwinging = true;
                 ropeAttached = true;
                 if (!ropePositions.Contains(hit.point))
                 {
                     ropePositions.Add(hit.point);
-                    ropeJoint.distance = Vector2.Distance(playerPosition, hit.point);
+                    ropeJoint.distance = distance;
                     ropeJoint.enabled = true;
                     ropeHingeAnchorSprite.enabled = true;
                 }
