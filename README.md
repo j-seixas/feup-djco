@@ -16,6 +16,7 @@
 # FeupEvac
 FeupEvac is a 2D platformer game where you play as a student studying at FEUP’s library. He’s startled by an explosion and suddenly has to face enemies, falling objects and holes on the floor. His goal is to exit the library towards safety. Once he does, he realizes he has fallen asleep while studying at the library. 
 
+- [Video Trailer](https://youtu.be/UN99osXLc1o)
 
 ## Controls
 - **[A]** and **[D]** move the player to left and right, respectively.
