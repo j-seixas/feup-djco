@@ -1,0 +1,12 @@
+All Source Code:
+Primary link: https://github.com/j-seixas/feup-djco/releases/tag/1.0 (DJCO-P1-G3-FeupEvac-code.zip)
+Backup link: https://drive.google.com/file/d/1fUtsxuaxg_Wu0X8A6wIqGDiGZYwf29eU/view?usp=sharing
+The C# scripts we made are under PreliminaryProject -> Assets -> Scripts and with file extension .cs
+
+Executable:
+Primary link: https://github.com/j-seixas/feup-djco/releases/tag/1.0 (DJCO-P1-G3-FeupEvac-game.zip)
+Backup link: https://drive.google.com/file/d/1K9giBt5Z80ySa01zLEvNv5NOuqtl_L3m/view?usp=sharing
+
+Video:
+https://www.youtube.com/watch?v=UN99osXLc1o
+
